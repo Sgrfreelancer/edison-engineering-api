@@ -1,0 +1,21 @@
+# Build folders
+bin/
+obj/
+
+# User files
+*.user
+*.suo
+
+# VS Code / VS
+.vscode/
+.vs/
+
+# Logs
+*.log
+
+# OS files
+.DS_Store
+Thumbs.db
+
+# ASP.NET secrets
+appsettings.Development.json
