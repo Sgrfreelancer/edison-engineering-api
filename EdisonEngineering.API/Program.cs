@@ -1,5 +1,8 @@
 using EdisonEngineering.Infrastructure.Persistence;
 using Microsoft.EntityFrameworkCore;
+using EdisonEngineering.Application.Interfaces;
+using EdisonEngineering.Infrastructure.Repositories;
+using EdisonEngineering.Application.Services;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -8,6 +11,10 @@ builder.Services.AddControllers();
 
 builder.Services.AddDbContext<AppDbContext>(options =>
 options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
+builder.Services.AddScoped<IMenuRepository, MenuRepository>();
+builder.Services.AddScoped<IMenuService, MenuService>();
+builder.Services.AddScoped<IServiceRepository, ServiceRepository>();
+builder.Services.AddScoped<IServiceService, ServiceService>();
 
 // ✅ Add Swagger services
 builder.Services.AddEndpointsApiExplorer();

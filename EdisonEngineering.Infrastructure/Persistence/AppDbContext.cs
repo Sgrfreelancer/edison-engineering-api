@@ -11,6 +11,8 @@ public class AppDbContext : DbContext
     }
 
     public DbSet<Menu> Menus { get; set; }
+    public DbSet<ServiceCategory> ServiceCategories { get; set; }
+    public DbSet<Service> Services { get; set; }
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
