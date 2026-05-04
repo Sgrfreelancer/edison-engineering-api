@@ -3,6 +3,8 @@ using Microsoft.EntityFrameworkCore;
 using EdisonEngineering.Application.Interfaces;
 using EdisonEngineering.Infrastructure.Repositories;
 using EdisonEngineering.Application.Services;
+using EdisonEngineering.Infrastructure.Repositories;
+using EdisonEngineering.Application.Interfaces;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -15,6 +17,8 @@ builder.Services.AddScoped<IMenuRepository, MenuRepository>();
 builder.Services.AddScoped<IMenuService, MenuService>();
 builder.Services.AddScoped<IServiceRepository, ServiceRepository>();
 builder.Services.AddScoped<IServiceService, ServiceService>();
+builder.Services.AddScoped<ICityRepository, CityRepository>();
+builder.Services.AddScoped<ICityService, CityService>();
 
 // ✅ Add Swagger services
 builder.Services.AddEndpointsApiExplorer();
