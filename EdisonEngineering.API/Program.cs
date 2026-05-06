@@ -21,6 +21,11 @@ builder.Services.AddScoped<ILeadRepository, LeadRepository>();
 builder.Services.AddScoped<ILeadService, LeadService>();
 builder.Services.AddScoped<IBlogRepository, BlogRepository>();
 builder.Services.AddScoped<IBlogService, BlogService>();
+builder.Services.AddScoped<ISolarCalculatorService, SolarCalculatorService>();
+builder.Services.AddScoped<IConfigRepository, ConfigRepository>();
+builder.Services.AddScoped<ICityPricingRepository, CityPricingRepository>();
+builder.Services.AddScoped<ISubsidyRepository, SubsidyRepository>();
+builder.Services.AddScoped<ISlabRepository, SlabRepository>();
 
 // ✅ Add Swagger services
 builder.Services.AddEndpointsApiExplorer();
