@@ -1,5 +1,7 @@
 using Microsoft.AspNetCore.Mvc;
 using EdisonEngineering.Application.Interfaces;
+using EdisonEngineering.Application.Common;
+using EdisonEngineering.Application.DTOs;
 
 namespace EdisonEngineering.API.Controllers;
 
@@ -8,41 +10,146 @@ namespace EdisonEngineering.API.Controllers;
 public class ServicesController : ControllerBase
 {
     private readonly IServiceService _service;
+    private readonly ILogger<ServicesController> _logger;
 
-    public ServicesController(IServiceService service)
+    public ServicesController(
+        IServiceService service,
+        ILogger<ServicesController> logger)
     {
         _service = service;
+        _logger = logger;
     }
 
     // GET: /api/services
     [HttpGet]
     public async Task<IActionResult> GetAll()
     {
+        _logger.LogInformation("Fetching all service categories");
+
         var data = await _service.GetAllAsync();
-        return Ok(data);
+
+        if (data == null || !data.Any())
+        {
+            _logger.LogWarning("No service categories found");
+
+            return NotFound(new ApiResponse<List<ServiceCategoryDto>>
+            {
+                Success = false,
+                Message = "No services found",
+                Data = new List<ServiceCategoryDto>()
+            });
+        }
+
+        _logger.LogInformation(
+            "Service categories fetched successfully. Count: {Count}",
+            data.Count());
+
+        return Ok(new ApiResponse<IEnumerable<ServiceCategoryDto>>
+        {
+            Success = true,
+            Message = "Services fetched successfully",
+            Data = data
+        });
     }
 
     // GET: /api/services/solar
     [HttpGet("{categorySlug}")]
     public async Task<IActionResult> GetByCategory(string categorySlug)
     {
+        if (string.IsNullOrWhiteSpace(categorySlug))
+        {
+            _logger.LogWarning("Category slug was empty");
+
+            return BadRequest(new ApiResponse<string>
+            {
+                Success = false,
+                Message = "Category slug is required"
+            });
+        }
+
+        _logger.LogInformation(
+            "Fetching service category for slug: {CategorySlug}",
+            categorySlug);
+
         var data = await _service.GetBySlugAsync(categorySlug);
 
         if (data == null)
-            return NotFound();
+        {
+            _logger.LogWarning(
+                "Service category not found for slug: {CategorySlug}",
+                categorySlug);
 
-        return Ok(data);
+            return NotFound(new ApiResponse<string>
+            {
+                Success = false,
+                Message = "Service category not found"
+            });
+        }
+
+        _logger.LogInformation(
+            "Service category fetched successfully for slug: {CategorySlug}",
+            categorySlug);
+
+        return Ok(new ApiResponse<ServiceCategoryDto>
+        {
+            Success = true,
+            Message = "Service category fetched successfully",
+            Data = data
+        });
     }
 
     // GET: /api/services/solar/homes
     [HttpGet("{categorySlug}/{serviceSlug}")]
-    public async Task<IActionResult> GetService(string categorySlug, string serviceSlug)
+    public async Task<IActionResult> GetService(
+        string categorySlug,
+        string serviceSlug)
     {
-        var data = await _service.GetServiceAsync(categorySlug, serviceSlug);
+        if (string.IsNullOrWhiteSpace(categorySlug) ||
+            string.IsNullOrWhiteSpace(serviceSlug))
+        {
+            _logger.LogWarning(
+                "Category slug or service slug was empty");
+
+            return BadRequest(new ApiResponse<string>
+            {
+                Success = false,
+                Message = "Category slug and service slug are required"
+            });
+        }
+
+        _logger.LogInformation(
+            "Fetching service details for category: {CategorySlug}, service: {ServiceSlug}",
+            categorySlug,
+            serviceSlug);
+
+        var data = await _service.GetServiceAsync(
+            categorySlug,
+            serviceSlug);
 
         if (data == null)
-            return NotFound();
+        {
+            _logger.LogWarning(
+                "Service not found for category: {CategorySlug}, service: {ServiceSlug}",
+                categorySlug,
+                serviceSlug);
 
-        return Ok(data);
+            return NotFound(new ApiResponse<string>
+            {
+                Success = false,
+                Message = "Service not found"
+            });
+        }
+
+        _logger.LogInformation(
+            "Service fetched successfully for category: {CategorySlug}, service: {ServiceSlug}",
+            categorySlug,
+            serviceSlug);
+
+        return Ok(new ApiResponse<ServiceDto>
+        {
+            Success = true,
+            Message = "Service fetched successfully",
+            Data = data
+        });
     }
 }

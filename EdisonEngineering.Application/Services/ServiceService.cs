@@ -1,20 +1,37 @@
 using EdisonEngineering.Application.DTOs;
 using EdisonEngineering.Application.Interfaces;
+using Microsoft.Extensions.Logging;
+
+namespace EdisonEngineering.Application.Services;
 
 public class ServiceService : IServiceService
 {
     private readonly IServiceRepository _repo;
+    private readonly ILogger<ServiceService> _logger;
 
-    public ServiceService(IServiceRepository repo)
+    public ServiceService(
+        IServiceRepository repo,
+        ILogger<ServiceService> logger)
     {
         _repo = repo;
+        _logger = logger;
     }
 
     public async Task<List<ServiceCategoryDto>> GetAllAsync()
     {
+        _logger.LogInformation(
+            "Fetching all service categories from repository");
+
         var data = await _repo.GetAllWithServicesAsync();
 
-        return data.Select(c => new ServiceCategoryDto
+        if (data == null || !data.Any())
+        {
+            _logger.LogWarning("No service categories found");
+
+            return new List<ServiceCategoryDto>();
+        }
+
+        var result = data.Select(c => new ServiceCategoryDto
         {
             Name = c.Name,
             Slug = c.Slug,
@@ -25,14 +42,39 @@ public class ServiceService : IServiceService
                 Description = s.Description
             }).ToList()
         }).ToList();
+
+        _logger.LogInformation(
+            "Service categories mapped successfully. Count: {Count}",
+            result.Count);
+
+        return result;
     }
 
     public async Task<ServiceCategoryDto?> GetBySlugAsync(string slug)
     {
-        var c = await _repo.GetBySlugAsync(slug);
-        if (c == null) return null;
+        _logger.LogInformation(
+            "Fetching service category by slug: {Slug}",
+            slug);
 
-        return new ServiceCategoryDto
+        if (string.IsNullOrWhiteSpace(slug))
+        {
+            _logger.LogWarning("Service category slug was empty");
+
+            return null;
+        }
+
+        var c = await _repo.GetBySlugAsync(slug);
+
+        if (c == null)
+        {
+            _logger.LogWarning(
+                "Service category not found for slug: {Slug}",
+                slug);
+
+            return null;
+        }
+
+        var result = new ServiceCategoryDto
         {
             Name = c.Name,
             Slug = c.Slug,
@@ -43,18 +85,58 @@ public class ServiceService : IServiceService
                 Description = s.Description
             }).ToList()
         };
+
+        _logger.LogInformation(
+            "Service category fetched successfully for slug: {Slug}",
+            slug);
+
+        return result;
     }
 
-    public async Task<ServiceDto?> GetServiceAsync(string categorySlug, string serviceSlug)
+    public async Task<ServiceDto?> GetServiceAsync(
+        string categorySlug,
+        string serviceSlug)
     {
-        var s = await _repo.GetServiceAsync(categorySlug, serviceSlug);
-        if (s == null) return null;
+        _logger.LogInformation(
+            "Fetching service details for category: {CategorySlug}, service: {ServiceSlug}",
+            categorySlug,
+            serviceSlug);
 
-        return new ServiceDto
+        if (string.IsNullOrWhiteSpace(categorySlug) ||
+            string.IsNullOrWhiteSpace(serviceSlug))
+        {
+            _logger.LogWarning(
+                "Category slug or service slug was empty");
+
+            return null;
+        }
+
+        var s = await _repo.GetServiceAsync(
+            categorySlug,
+            serviceSlug);
+
+        if (s == null)
+        {
+            _logger.LogWarning(
+                "Service not found for category: {CategorySlug}, service: {ServiceSlug}",
+                categorySlug,
+                serviceSlug);
+
+            return null;
+        }
+
+        var result = new ServiceDto
         {
             Name = s.Name,
             Slug = s.Slug,
             Description = s.Description
         };
+
+        _logger.LogInformation(
+            "Service fetched successfully for category: {CategorySlug}, service: {ServiceSlug}",
+            categorySlug,
+            serviceSlug);
+
+        return result;
     }
 }

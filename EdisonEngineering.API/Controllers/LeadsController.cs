@@ -1,37 +1,55 @@
-using Microsoft.AspNetCore.Mvc;
-using EdisonEngineering.Application.Interfaces;
+using EdisonEngineering.Application.Common;
 using EdisonEngineering.Application.DTOs;
+using EdisonEngineering.Application.Interfaces;
+using Microsoft.AspNetCore.Mvc;
 
 namespace EdisonEngineering.API.Controllers;
 
 [ApiController]
-[Route("api/[controller]")]
-public class LeadsController : ControllerBase
+[Route("api/leads")]
+public class LeadController : ControllerBase
 {
     private readonly ILeadService _service;
+    private readonly ILogger<LeadController> _logger;
 
-    public LeadsController(ILeadService service)
+    public LeadController(
+        ILeadService service,
+        ILogger<LeadController> logger)
     {
         _service = service;
+        _logger = logger;
     }
 
     // POST: /api/leads
     [HttpPost]
-    public async Task<IActionResult> Create([FromBody] CreateLeadDto dto)
+    public async Task<IActionResult> CreateLead([FromBody] CreateLeadDto dto)
     {
-        var result = await _service.CreateAsync(dto);
-
-        if (!result)
+        if (dto == null)
         {
-            return BadRequest(new
+            _logger.LogWarning("Lead request body was null");
+
+            return BadRequest(new ApiResponse<string>
             {
-                message = "Invalid data. Please fill all required fields."
+                Success = false,
+                Message = "Invalid request body"
             });
         }
 
-        return Ok(new
-        {
-            message = "Your request has been submitted successfully."
-        });
+        _logger.LogInformation(
+            "Lead request received for phone: {Phone}",
+            dto.Phone);
+
+        await _service.CreateAsync(dto);
+
+        _logger.LogInformation(
+            "Lead created successfully for phone: {Phone}",
+            dto.Phone);
+
+        return StatusCode(StatusCodes.Status201Created,
+            new ApiResponse<string>
+            {
+                Success = true,
+                Message = "Lead submitted successfully"
+            });
     }
 }
