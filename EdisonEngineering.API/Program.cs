@@ -7,6 +7,9 @@ using EdisonEngineering.Application.Services;
 using EdisonEngineering.API.Middleware;
 using Microsoft.AspNetCore.Mvc;
 using Serilog;
+using Asp.Versioning;
+using System.Threading.RateLimiting;
+using System.Threading.RateLimiting;
 
 Log.Logger = new LoggerConfiguration()
     .ReadFrom.Configuration(
@@ -42,6 +45,18 @@ builder.Services.AddControllers()
         };
     });
 
+builder.Services.AddApiVersioning(options =>
+{
+    options.DefaultApiVersion = new Asp.Versioning.ApiVersion(1, 0);
+
+    options.AssumeDefaultVersionWhenUnspecified = true;
+
+    options.ReportApiVersions = true;
+
+    options.ApiVersionReader =
+        new Asp.Versioning.UrlSegmentApiVersionReader();
+});
+
 builder.Services.AddDbContext<AppDbContext>(options =>
 options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
 builder.Services.AddScoped<IMenuRepository, MenuRepository>();
@@ -64,6 +79,39 @@ builder.Services.AddScoped<IJobApplicationRepository, JobApplicationRepository>(
 builder.Services.AddScoped<IJobService, JobService>();
 builder.Services.AddHealthChecks();
 
+// Add response compression
+builder.Services.AddResponseCompression();
+
+// Add CORS
+builder.Services.AddCors(options =>
+{
+    options.AddPolicy("AllowFrontend",
+        policy =>
+        {
+            policy
+                .AllowAnyOrigin()
+                .AllowAnyMethod()
+                .AllowAnyHeader();
+        });
+});
+
+// Add rate limiting
+builder.Services.AddRateLimiter(options =>
+{
+    options.RejectionStatusCode = StatusCodes.Status429TooManyRequests;
+
+    options.AddPolicy("fixed", context =>
+        RateLimitPartition.GetFixedWindowLimiter(
+            partitionKey: context.Connection.RemoteIpAddress?.ToString() ?? "unknown",
+            factory: partition => new FixedWindowRateLimiterOptions
+            {
+                PermitLimit = 20,
+                Window = TimeSpan.FromMinutes(1),
+                QueueProcessingOrder = QueueProcessingOrder.OldestFirst,
+                QueueLimit = 5
+            }));
+});
+
 // ✅ Add Swagger services
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen(options =>
@@ -80,6 +128,15 @@ builder.Services.AddSwaggerGen(options =>
 var app = builder.Build();
 
 app.UseMiddleware<ExceptionMiddleware>();
+
+// Enable response compression
+app.UseResponseCompression();
+
+// Enable CORS
+app.UseCors("AllowFrontend");
+
+// Enable rate limiting
+app.UseRateLimiter();
 
 // ✅ Enable Swagger ONLY in Development
 // if (app.Environment.IsDevelopment())

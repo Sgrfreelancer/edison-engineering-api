@@ -4,11 +4,15 @@ using EdisonEngineering.Application.DTOs;
 using EdisonEngineering.Application.Common;
 using EdisonEngineering.Domain.Entities;
 using Microsoft.Extensions.Logging;
+using Asp.Versioning;
+using Microsoft.AspNetCore.RateLimiting;
 
 namespace EdisonEngineering.API.Controllers;
 
+[ApiVersion("1.0")]
 [ApiController]
-[Route("api/[controller]")]
+[Route("api/v{version:apiVersion}/[controller]")]
+[EnableRateLimiting("fixed")]
 public class SolarCalculatorController : ControllerBase
 {
     private readonly ISolarCalculatorService _service;

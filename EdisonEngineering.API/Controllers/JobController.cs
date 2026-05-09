@@ -2,11 +2,16 @@ using EdisonEngineering.Application.DTOs;
 using EdisonEngineering.Application.Interfaces;
 using Microsoft.AspNetCore.Mvc;
 using EdisonEngineering.Application.Common;
+using Asp.Versioning;
+using Microsoft.AspNetCore.RateLimiting;
+using Asp.Versioning;
 
 namespace EdisonEngineering.API.Controllers;
 
+[ApiVersion("1.0")]
 [ApiController]
-[Route("api/jobs")]
+[Route("api/v{version:apiVersion}/jobs")]
+[EnableRateLimiting("fixed")]
 public class JobController : ControllerBase
 {
     private readonly IJobService _service;

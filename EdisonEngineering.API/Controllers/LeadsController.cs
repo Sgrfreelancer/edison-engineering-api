@@ -2,11 +2,16 @@ using EdisonEngineering.Application.Common;
 using EdisonEngineering.Application.DTOs;
 using EdisonEngineering.Application.Interfaces;
 using Microsoft.AspNetCore.Mvc;
+using Asp.Versioning;
+using Microsoft.AspNetCore.RateLimiting;
+using Asp.Versioning;
 
 namespace EdisonEngineering.API.Controllers;
 
+[ApiVersion("1.0")]
 [ApiController]
-[Route("api/leads")]
+[Route("api/v{version:apiVersion}/leads")]
+[EnableRateLimiting("fixed")]
 public class LeadController : ControllerBase
 {
     private readonly ILeadService _service;

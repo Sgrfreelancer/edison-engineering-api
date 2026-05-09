@@ -2,11 +2,16 @@ using Microsoft.AspNetCore.Mvc;
 using EdisonEngineering.Application.Interfaces;
 using EdisonEngineering.Application.Common;
 using EdisonEngineering.Application.DTOs;
+using Asp.Versioning;
+using Microsoft.AspNetCore.RateLimiting;
+using Asp.Versioning;
 
 namespace EdisonEngineering.API.Controllers;
 
+[ApiVersion("1.0")]
 [ApiController]
-[Route("api/[controller]")]
+[Route("api/v{version:apiVersion}/[controller]")]
+[EnableRateLimiting("fixed")]
 public class BlogsController : ControllerBase
 {
     private readonly IBlogService _service;
