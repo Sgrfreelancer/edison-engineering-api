@@ -20,18 +20,19 @@ public class ServiceService : IServiceService
     public async Task<List<ServiceCategoryDto>> GetAllAsync()
     {
         _logger.LogInformation(
-            "Fetching all service categories from repository");
+            "Fetching all service categories");
 
         var data = await _repo.GetAllWithServicesAsync();
 
         if (data == null || !data.Any())
         {
-            _logger.LogWarning("No service categories found");
+            _logger.LogWarning(
+                "No service categories found");
 
             return new List<ServiceCategoryDto>();
         }
 
-        var result = data.Select(c => new ServiceCategoryDto
+        return data.Select(c => new ServiceCategoryDto
         {
             Name = c.Name,
             Slug = c.Slug,
@@ -42,23 +43,18 @@ public class ServiceService : IServiceService
                 Description = s.Description
             }).ToList()
         }).ToList();
-
-        _logger.LogInformation(
-            "Service categories mapped successfully. Count: {Count}",
-            result.Count);
-
-        return result;
     }
 
     public async Task<ServiceCategoryDto?> GetBySlugAsync(string slug)
     {
         _logger.LogInformation(
-            "Fetching service category by slug: {Slug}",
+            "Fetching service category for slug: {Slug}",
             slug);
 
         if (string.IsNullOrWhiteSpace(slug))
         {
-            _logger.LogWarning("Service category slug was empty");
+            _logger.LogWarning(
+                "Service category slug is empty");
 
             return null;
         }
@@ -74,7 +70,7 @@ public class ServiceService : IServiceService
             return null;
         }
 
-        var result = new ServiceCategoryDto
+        return new ServiceCategoryDto
         {
             Name = c.Name,
             Slug = c.Slug,
@@ -85,12 +81,6 @@ public class ServiceService : IServiceService
                 Description = s.Description
             }).ToList()
         };
-
-        _logger.LogInformation(
-            "Service category fetched successfully for slug: {Slug}",
-            slug);
-
-        return result;
     }
 
     public async Task<ServiceDto?> GetServiceAsync(
@@ -106,7 +96,7 @@ public class ServiceService : IServiceService
             string.IsNullOrWhiteSpace(serviceSlug))
         {
             _logger.LogWarning(
-                "Category slug or service slug was empty");
+                "Category slug or service slug is empty");
 
             return null;
         }
@@ -125,18 +115,11 @@ public class ServiceService : IServiceService
             return null;
         }
 
-        var result = new ServiceDto
+        return new ServiceDto
         {
             Name = s.Name,
             Slug = s.Slug,
             Description = s.Description
         };
-
-        _logger.LogInformation(
-            "Service fetched successfully for category: {CategorySlug}, service: {ServiceSlug}",
-            categorySlug,
-            serviceSlug);
-
-        return result;
     }
 }

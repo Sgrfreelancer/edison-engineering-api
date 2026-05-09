@@ -30,14 +30,18 @@ public class ExceptionMiddleware
         {
             var traceId = context.TraceIdentifier;
 
-            _logger.LogError(ex,
-                "Exception occurred. TraceId: {TraceId}, Message: {Message}",
+            _logger.LogError(
+                ex,
+                "Unhandled exception occurred. TraceId: {TraceId}, Path: {Path}, Method: {Method}",
                 traceId,
-                ex.Message);
+                context.Request.Path,
+                context.Request.Method);
 
-            context.Response.StatusCode = (int)HttpStatusCode.InternalServerError;
+            context.Response.StatusCode =
+                (int)HttpStatusCode.InternalServerError;
 
-            context.Response.ContentType = "application/json";
+            context.Response.ContentType =
+                "application/json";
 
             var response = new ApiResponse<object>
             {
@@ -46,13 +50,23 @@ public class ExceptionMiddleware
                 Errors = new List<string>()
             };
 
-            // Show actual error only in development
+            // Show actual error only in Development
             if (_environment.IsDevelopment())
             {
                 response.Errors.Add(ex.Message);
+
+                if (ex.InnerException != null)
+                {
+                    response.Errors.Add(ex.InnerException.Message);
+                }
             }
 
-            var json = JsonSerializer.Serialize(response);
+            var json = JsonSerializer.Serialize(
+                response,
+                new JsonSerializerOptions
+                {
+                    PropertyNamingPolicy = JsonNamingPolicy.CamelCase
+                });
 
             await context.Response.WriteAsync(json);
         }

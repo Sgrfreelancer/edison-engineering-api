@@ -2,6 +2,8 @@ using Microsoft.AspNetCore.Mvc;
 using EdisonEngineering.Application.Interfaces;
 using EdisonEngineering.Application.DTOs;
 using EdisonEngineering.Application.Common;
+using EdisonEngineering.Domain.Entities;
+using Microsoft.Extensions.Logging;
 
 namespace EdisonEngineering.API.Controllers;
 
@@ -42,18 +44,18 @@ public class SolarCalculatorController : ControllerBase
             request.City,
             request.MonthlyBill);
 
-        if (request.MonthlyBill <= 0)
-        {
-            _logger.LogWarning(
-                "Invalid monthly bill received: {MonthlyBill}",
-                request.MonthlyBill);
+        // if (request.MonthlyBill <= 0)
+        // {
+        //     _logger.LogWarning(
+        //         "Invalid monthly bill received: {MonthlyBill}",
+        //         request.MonthlyBill);
 
-            return BadRequest(new ApiResponse<string>
-            {
-                Success = false,
-                Message = "Monthly bill must be greater than 0"
-            });
-        }
+        //     return BadRequest(new ApiResponse<string>
+        //     {
+        //         Success = false,
+        //         Message = "Monthly bill must be greater than 0"
+        //     });
+        // }
 
         var result = await _service.CalculateAsync(request);
 

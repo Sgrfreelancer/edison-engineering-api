@@ -25,17 +25,17 @@ public class LeadService : ILeadService
             dto.Phone);
 
         // Basic Validation
-        if (string.IsNullOrWhiteSpace(dto.Name) ||
-            string.IsNullOrWhiteSpace(dto.Phone) ||
-            string.IsNullOrWhiteSpace(dto.City) ||
-            string.IsNullOrWhiteSpace(dto.ServiceType))
-        {
-            _logger.LogWarning(
-                "Lead validation failed for phone: {Phone}",
-                dto.Phone);
+        // if (string.IsNullOrWhiteSpace(dto.Name) ||
+        //     string.IsNullOrWhiteSpace(dto.Phone) ||
+        //     string.IsNullOrWhiteSpace(dto.City) ||
+        //     string.IsNullOrWhiteSpace(dto.ServiceType))
+        // {
+        //     _logger.LogWarning(
+        //         "Lead validation failed for phone: {Phone}",
+        //         dto.Phone);
 
-            return false;
-        }
+        //     return false;
+        // }
 
         var lead = new Lead
         {

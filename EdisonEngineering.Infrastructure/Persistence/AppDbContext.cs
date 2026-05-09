@@ -26,10 +26,40 @@ public class AppDbContext : DbContext
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
+        base.OnModelCreating(modelBuilder);
+
+        // Menu self-reference relationship
         modelBuilder.Entity<Menu>()
             .HasMany(m => m.Children)
             .WithOne(m => m.Parent)
             .HasForeignKey(m => m.ParentId)
             .OnDelete(DeleteBehavior.Restrict);
+
+        // CityPricing decimal precision
+        modelBuilder.Entity<CityPricing>()
+            .Property(x => x.CostPerKW)
+            .HasPrecision(18, 2);
+
+        modelBuilder.Entity<CityPricing>()
+            .Property(x => x.RatePerUnit)
+            .HasPrecision(18, 2);
+
+        // ElectricitySlab decimal precision
+        modelBuilder.Entity<ElectricitySlab>()
+            .Property(x => x.Rate)
+            .HasPrecision(18, 2);
+
+        // Subsidy decimal precision
+        modelBuilder.Entity<Subsidy>()
+            .Property(x => x.MinKW)
+            .HasPrecision(18, 2);
+
+        modelBuilder.Entity<Subsidy>()
+            .Property(x => x.MaxKW)
+            .HasPrecision(18, 2);
+
+        modelBuilder.Entity<Subsidy>()
+            .Property(x => x.SubsidyAmountPerKW)
+            .HasPrecision(18, 2);
     }
 }
