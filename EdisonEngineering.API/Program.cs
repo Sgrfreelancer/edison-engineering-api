@@ -9,7 +9,10 @@ using Microsoft.AspNetCore.Mvc;
 using Serilog;
 using Asp.Versioning;
 using System.Threading.RateLimiting;
-using System.Threading.RateLimiting;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.IdentityModel.Tokens;
+using System.Text;
+using Microsoft.OpenApi.Models;
 
 Log.Logger = new LoggerConfiguration()
     .ReadFrom.Configuration(
@@ -78,6 +81,8 @@ builder.Services.AddScoped<IJobRepository, JobRepository>();
 builder.Services.AddScoped<IJobApplicationRepository, JobApplicationRepository>();
 builder.Services.AddScoped<IJobService, JobService>();
 builder.Services.AddHealthChecks();
+builder.Services.AddScoped<IAuthRepository, AuthRepository>();
+builder.Services.AddScoped<IAuthService, AuthService>();
 
 // Add response compression
 builder.Services.AddResponseCompression();
@@ -112,17 +117,76 @@ builder.Services.AddRateLimiter(options =>
             }));
 });
 
+builder.Services
+    .AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
+    .AddJwtBearer(options =>
+    {
+        var jwtSettings =
+            builder.Configuration.GetSection("Jwt");
+
+        options.TokenValidationParameters =
+            new TokenValidationParameters
+            {
+                ValidateIssuer = true,
+                ValidateAudience = true,
+                ValidateLifetime = true,
+                ValidateIssuerSigningKey = true,
+                ValidIssuer = jwtSettings["Issuer"],
+                ValidAudience = jwtSettings["Audience"],
+                IssuerSigningKey =
+                    new SymmetricSecurityKey(
+                        Encoding.UTF8.GetBytes(
+                            jwtSettings["Key"]))
+            };
+    });
+
 // ✅ Add Swagger services
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen(options =>
 {
-    var xmlFile =
-        $"{System.Reflection.Assembly.GetExecutingAssembly().GetName().Name}.xml";
+    options.SwaggerDoc("v1",
+        new OpenApiInfo
+        {
+            Title = "Edison Engineering API",
+            Version = "v1"
+        });
 
-    var xmlPath =
-        Path.Combine(AppContext.BaseDirectory, xmlFile);
+    // 🔐 JWT AUTH CONFIG
 
-    options.IncludeXmlComments(xmlPath);
+    options.AddSecurityDefinition("Bearer",
+        new OpenApiSecurityScheme
+        {
+            Name = "Authorization",
+
+            Type = SecuritySchemeType.Http,
+
+            Scheme = "bearer",
+
+            BearerFormat = "JWT",
+
+            In = ParameterLocation.Header,
+
+            Description =
+                "Enter JWT Token"
+        });
+
+    options.AddSecurityRequirement(
+        new OpenApiSecurityRequirement
+        {
+            {
+                new OpenApiSecurityScheme
+                {
+                    Reference =
+                        new OpenApiReference
+                        {
+                            Type = ReferenceType.SecurityScheme,
+                            Id = "Bearer"
+                        }
+                },
+
+                Array.Empty<string>()
+            }
+        });
 });
 
 var app = builder.Build();
@@ -153,6 +217,7 @@ app.UseHttpsRedirection();
 
 app.UseRouting();
 
+app.UseAuthentication();
 app.UseAuthorization();
 
 app.MapControllers();
