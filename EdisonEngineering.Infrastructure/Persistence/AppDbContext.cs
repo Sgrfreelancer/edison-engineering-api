@@ -23,6 +23,7 @@ public class AppDbContext : DbContext
     public DbSet<ElectricitySlab> ElectricitySlabs { get; set; }
     public DbSet<Job> Jobs { get; set; }
     public DbSet<JobApplication> JobApplications { get; set; }
+    public DbSet<AppUser> AppUsers { get; set; }
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
