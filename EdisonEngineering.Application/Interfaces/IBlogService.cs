@@ -1,8 +1,10 @@
+using EdisonEngineering.Application.Common;
 using EdisonEngineering.Application.DTOs;
 
 public interface IBlogService
 {
-    Task<List<BlogListDto>> GetAllAsync();
+    Task<PagedResponse<BlogListDto>> GetAllAsync(
+    BlogQueryDto query);
     Task<BlogDto?> GetBySlugAsync(string slug);
 
     // ✅ NEW METHODS

@@ -8,7 +8,7 @@ public interface IBlogRepository
     Task<Blog?> GetBySlugAsync(string slug);
 
      // ✅ NEW METHODS
-     
+
     Task<Blog?> GetByIdAsync(int id);
 
     Task AddAsync(Blog blog);
@@ -16,4 +16,10 @@ public interface IBlogRepository
     Task UpdateAsync(Blog blog);
 
     Task DeleteAsync(Blog blog);
+
+    Task<(List<Blog> Blogs, int TotalCount)>
+    GetPagedAsync(
+        int page,
+        int pageSize,
+        string? search);
 }

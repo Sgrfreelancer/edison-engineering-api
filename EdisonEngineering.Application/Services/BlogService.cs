@@ -1,3 +1,4 @@
+using EdisonEngineering.Application.Common;
 using EdisonEngineering.Application.DTOs;
 using EdisonEngineering.Application.Interfaces;
 using EdisonEngineering.Domain.Entities;
@@ -24,14 +25,22 @@ public class BlogService : IBlogService
     // GET ALL BLOGS
     // =========================================================
 
-    public async Task<List<BlogListDto>> GetAllAsync()
+    public async Task<PagedResponse<BlogListDto>>
+        GetAllAsync(BlogQueryDto query)
     {
         _logger.LogInformation(
-            "Fetching all blogs");
+            "Fetching blogs. Page: {Page}, PageSize: {PageSize}, Search: {Search}",
+            query.Page,
+            query.PageSize,
+            query.Search);
 
-        var data = await _repo.GetAllAsync();
+        var (blogs, totalCount) =
+            await _repo.GetPagedAsync(
+                query.Page,
+                query.PageSize,
+                query.Search);
 
-        var result = data.Select(b => new BlogListDto
+        var items = blogs.Select(b => new BlogListDto
         {
             Title = b.Title,
             Slug = b.Slug,
@@ -39,11 +48,21 @@ public class BlogService : IBlogService
             CreatedAt = b.CreatedAt
         }).ToList();
 
-        _logger.LogInformation(
-            "Blogs fetched successfully. Count: {Count}",
-            result.Count);
+        return new PagedResponse<BlogListDto>
+        {
+            Items = items,
 
-        return result;
+            Page = query.Page,
+
+            PageSize = query.PageSize,
+
+            TotalCount = totalCount,
+
+            TotalPages =
+                (int)Math.Ceiling(
+                    totalCount /
+                    (double)query.PageSize)
+        };
     }
 
     // =========================================================

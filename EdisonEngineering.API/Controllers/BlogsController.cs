@@ -28,20 +28,22 @@ public class BlogsController : ControllerBase
     // =========================================================
 
     [HttpGet]
-    public async Task<IActionResult> GetAll()
+    public async Task<IActionResult> GetAll(
+        [FromQuery] BlogQueryDto query)
     {
         _logger.LogInformation(
-            "Fetching all blogs");
+            "Fetching paginated blogs");
 
         var data =
-            await _service.GetAllAsync();
+            await _service.GetAllAsync(query);
 
-        return Ok(new ApiResponse<List<BlogListDto>>
-        {
-            Success = true,
-            Message = "Blogs fetched successfully",
-            Data = data
-        });
+        return Ok(
+            new ApiResponse<PagedResponse<BlogListDto>>
+            {
+                Success = true,
+                Message = "Blogs fetched successfully",
+                Data = data
+            });
     }
 
     // =========================================================

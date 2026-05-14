@@ -63,4 +63,36 @@ public class BlogRepository : IBlogRepository
 
         await _context.SaveChangesAsync();
     }
+
+    public async Task<(List<Blog> Blogs, int TotalCount)>
+    GetPagedAsync(
+        int page,
+        int pageSize,
+        string? search)
+    {
+        var query = _context.Blogs.AsQueryable();
+
+        // ✅ SEARCH
+
+        if (!string.IsNullOrWhiteSpace(search))
+        {
+            query = query.Where(x =>
+                x.Title.Contains(search));
+        }
+
+        // ✅ TOTAL COUNT
+
+        var totalCount =
+            await query.CountAsync();
+
+        // ✅ PAGINATION
+
+        var blogs = await query
+            .OrderByDescending(x => x.CreatedAt)
+            .Skip((page - 1) * pageSize)
+            .Take(pageSize)
+            .ToListAsync();
+
+        return (blogs, totalCount);
+    }
 }

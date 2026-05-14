@@ -199,6 +199,9 @@ app.UseResponseCompression();
 // Enable CORS
 app.UseCors("AllowFrontend");
 
+// Enable static files
+app.UseStaticFiles();
+
 // Enable rate limiting
 app.UseRateLimiter();
 
