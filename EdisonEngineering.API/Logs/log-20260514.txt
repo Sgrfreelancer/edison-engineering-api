@@ -1,0 +1,235 @@
+[2026-05-14 08:57:55 WRN] Failed to determine the https port for redirect. {"EventId":{"Id":3,"Name":"FailedToDeterminePort"},"SourceContext":"Microsoft.AspNetCore.HttpsPolicy.HttpsRedirectionMiddleware","RequestId":"0HNLHD34V0EMT:00000001","RequestPath":"/","ConnectionId":"0HNLHD34V0EMT"}
+[2026-05-14 08:57:55 INF] HTTP GET / responded 404 in 96.0637 ms {"SourceContext":"Serilog.AspNetCore.RequestLoggingMiddleware","RequestId":"0HNLHD34V0EMT:00000001","ConnectionId":"0HNLHD34V0EMT"}
+[2026-05-14 09:08:08 WRN] Failed to determine the https port for redirect. {"EventId":{"Id":3,"Name":"FailedToDeterminePort"},"SourceContext":"Microsoft.AspNetCore.HttpsPolicy.HttpsRedirectionMiddleware","RequestId":"0HNLHD8A0ABTR:00000003","RequestPath":"/api/v1/auth/login","ConnectionId":"0HNLHD8A0ABTR"}
+[2026-05-14 09:08:09 INF] Login API called for email: admin@edison.com {"SourceContext":"EdisonEngineering.API.Controllers.AuthController","ActionId":"9430138a-da6a-447a-9c91-fca8af07865a","ActionName":"EdisonEngineering.API.Controllers.AuthController.Login (EdisonEngineering.API)","RequestId":"0HNLHD8A0ABTR:00000003","RequestPath":"/api/v1/auth/login","ConnectionId":"0HNLHD8A0ABTR"}
+[2026-05-14 09:08:09 INF] Login attempt for email: admin@edison.com {"SourceContext":"EdisonEngineering.Application.Services.AuthService","ActionId":"9430138a-da6a-447a-9c91-fca8af07865a","ActionName":"EdisonEngineering.API.Controllers.AuthController.Login (EdisonEngineering.API)","RequestId":"0HNLHD8A0ABTR:00000003","RequestPath":"/api/v1/auth/login","ConnectionId":"0HNLHD8A0ABTR"}
+[2026-05-14 09:08:12 INF] Login successful for email: admin@edison.com {"SourceContext":"EdisonEngineering.Application.Services.AuthService","ActionId":"9430138a-da6a-447a-9c91-fca8af07865a","ActionName":"EdisonEngineering.API.Controllers.AuthController.Login (EdisonEngineering.API)","RequestId":"0HNLHD8A0ABTR:00000003","RequestPath":"/api/v1/auth/login","ConnectionId":"0HNLHD8A0ABTR"}
+[2026-05-14 09:08:12 INF] HTTP POST /api/v1/auth/login responded 200 in 4585.6327 ms {"SourceContext":"Serilog.AspNetCore.RequestLoggingMiddleware","RequestId":"0HNLHD8A0ABTR:00000003","ConnectionId":"0HNLHD8A0ABTR"}
+[2026-05-14 09:09:16 INF] Fetching all blogs {"SourceContext":"EdisonEngineering.API.Controllers.BlogsController","ActionId":"51a2e3a5-7344-4351-ba9a-2a3180ebe92c","ActionName":"EdisonEngineering.API.Controllers.BlogsController.GetAll (EdisonEngineering.API)","RequestId":"0HNLHD8A0ABTR:00000004","RequestPath":"/api/Blogs","ConnectionId":"0HNLHD8A0ABTR"}
+[2026-05-14 09:09:16 INF] Fetching all blogs {"SourceContext":"EdisonEngineering.Application.Services.BlogService","ActionId":"51a2e3a5-7344-4351-ba9a-2a3180ebe92c","ActionName":"EdisonEngineering.API.Controllers.BlogsController.GetAll (EdisonEngineering.API)","RequestId":"0HNLHD8A0ABTR:00000004","RequestPath":"/api/Blogs","ConnectionId":"0HNLHD8A0ABTR"}
+[2026-05-14 09:09:16 INF] Blogs fetched successfully. Count: 1 {"SourceContext":"EdisonEngineering.Application.Services.BlogService","ActionId":"51a2e3a5-7344-4351-ba9a-2a3180ebe92c","ActionName":"EdisonEngineering.API.Controllers.BlogsController.GetAll (EdisonEngineering.API)","RequestId":"0HNLHD8A0ABTR:00000004","RequestPath":"/api/Blogs","ConnectionId":"0HNLHD8A0ABTR"}
+[2026-05-14 09:09:16 INF] HTTP GET /api/Blogs responded 200 in 237.2944 ms {"SourceContext":"Serilog.AspNetCore.RequestLoggingMiddleware","RequestId":"0HNLHD8A0ABTR:00000004","ConnectionId":"0HNLHD8A0ABTR"}
+[2026-05-14 09:09:43 INF] Creating blog with slug: benefits-of-solar-energy {"SourceContext":"EdisonEngineering.API.Controllers.BlogsController","ActionId":"e6a2a217-2efb-4e25-bde9-4343f1e91374","ActionName":"EdisonEngineering.API.Controllers.BlogsController.Create (EdisonEngineering.API)","RequestId":"0HNLHD8A0ABTR:00000005","RequestPath":"/api/Blogs","ConnectionId":"0HNLHD8A0ABTR"}
+[2026-05-14 09:09:43 INF] Creating blog with slug: benefits-of-solar-energy {"SourceContext":"EdisonEngineering.Application.Services.BlogService","ActionId":"e6a2a217-2efb-4e25-bde9-4343f1e91374","ActionName":"EdisonEngineering.API.Controllers.BlogsController.Create (EdisonEngineering.API)","RequestId":"0HNLHD8A0ABTR:00000005","RequestPath":"/api/Blogs","ConnectionId":"0HNLHD8A0ABTR"}
+[2026-05-14 09:09:43 WRN] Duplicate slug detected: benefits-of-solar-energy {"SourceContext":"EdisonEngineering.Application.Services.BlogService","ActionId":"e6a2a217-2efb-4e25-bde9-4343f1e91374","ActionName":"EdisonEngineering.API.Controllers.BlogsController.Create (EdisonEngineering.API)","RequestId":"0HNLHD8A0ABTR:00000005","RequestPath":"/api/Blogs","ConnectionId":"0HNLHD8A0ABTR"}
+[2026-05-14 09:09:43 ERR] HTTP POST /api/Blogs responded 500 in 207.6336 ms {"SourceContext":"Serilog.AspNetCore.RequestLoggingMiddleware","RequestId":"0HNLHD8A0ABTR:00000005","ConnectionId":"0HNLHD8A0ABTR"}
+System.Exception: Blog slug already exists
+   at EdisonEngineering.Application.Services.BlogService.CreateAsync(CreateBlogDto dto) in D:\Work\EdisionEngineering\EdisonEngineering.Application\Services\BlogService.cs:line 103
+   at EdisonEngineering.API.Controllers.BlogsController.Create(CreateBlogDto dto) in D:\Work\EdisionEngineering\EdisonEngineering.API\Controllers\BlogsController.cs:line 98
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ActionMethodExecutor.TaskOfIActionResultExecutor.Execute(ActionContext actionContext, IActionResultTypeMapper mapper, ObjectMethodExecutor executor, Object controller, Object[] arguments)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.<InvokeActionMethodAsync>g__Awaited|12_0(ControllerActionInvoker invoker, ValueTask`1 actionResultValueTask)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.<InvokeNextActionFilterAsync>g__Awaited|10_0(ControllerActionInvoker invoker, Task lastTask, State next, Scope scope, Object state, Boolean isCompleted)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.Rethrow(ActionExecutedContextSealed context)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.Next(State& next, Scope& scope, Object& state, Boolean& isCompleted)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.<InvokeInnerFilterAsync>g__Awaited|13_0(ControllerActionInvoker invoker, Task lastTask, State next, Scope scope, Object state, Boolean isCompleted)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.<InvokeFilterPipelineAsync>g__Awaited|20_0(ResourceInvoker invoker, Task lastTask, State next, Scope scope, Object state, Boolean isCompleted)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.<InvokeAsync>g__Awaited|17_0(ResourceInvoker invoker, Task task, IDisposable scope)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.<InvokeAsync>g__Awaited|17_0(ResourceInvoker invoker, Task task, IDisposable scope)
+   at Microsoft.AspNetCore.Authorization.AuthorizationMiddleware.Invoke(HttpContext context)
+   at Microsoft.AspNetCore.Authentication.AuthenticationMiddleware.Invoke(HttpContext context)
+   at Serilog.AspNetCore.RequestLoggingMiddleware.Invoke(HttpContext httpContext)
+[2026-05-14 09:09:43 ERR] Unhandled exception occurred. TraceId: 0HNLHD8A0ABTR:00000005, Path: /api/Blogs, Method: POST {"SourceContext":"EdisonEngineering.API.Middleware.ExceptionMiddleware","RequestId":"0HNLHD8A0ABTR:00000005","RequestPath":"/api/Blogs","ConnectionId":"0HNLHD8A0ABTR"}
+System.Exception: Blog slug already exists
+   at EdisonEngineering.Application.Services.BlogService.CreateAsync(CreateBlogDto dto) in D:\Work\EdisionEngineering\EdisonEngineering.Application\Services\BlogService.cs:line 103
+   at EdisonEngineering.API.Controllers.BlogsController.Create(CreateBlogDto dto) in D:\Work\EdisionEngineering\EdisonEngineering.API\Controllers\BlogsController.cs:line 98
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ActionMethodExecutor.TaskOfIActionResultExecutor.Execute(ActionContext actionContext, IActionResultTypeMapper mapper, ObjectMethodExecutor executor, Object controller, Object[] arguments)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.<InvokeActionMethodAsync>g__Awaited|12_0(ControllerActionInvoker invoker, ValueTask`1 actionResultValueTask)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.<InvokeNextActionFilterAsync>g__Awaited|10_0(ControllerActionInvoker invoker, Task lastTask, State next, Scope scope, Object state, Boolean isCompleted)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.Rethrow(ActionExecutedContextSealed context)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.Next(State& next, Scope& scope, Object& state, Boolean& isCompleted)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.<InvokeInnerFilterAsync>g__Awaited|13_0(ControllerActionInvoker invoker, Task lastTask, State next, Scope scope, Object state, Boolean isCompleted)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.<InvokeFilterPipelineAsync>g__Awaited|20_0(ResourceInvoker invoker, Task lastTask, State next, Scope scope, Object state, Boolean isCompleted)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.<InvokeAsync>g__Awaited|17_0(ResourceInvoker invoker, Task task, IDisposable scope)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.<InvokeAsync>g__Awaited|17_0(ResourceInvoker invoker, Task task, IDisposable scope)
+   at Microsoft.AspNetCore.Authorization.AuthorizationMiddleware.Invoke(HttpContext context)
+   at Microsoft.AspNetCore.Authentication.AuthenticationMiddleware.Invoke(HttpContext context)
+   at Serilog.AspNetCore.RequestLoggingMiddleware.Invoke(HttpContext httpContext)
+   at EdisonEngineering.API.Middleware.SecurityHeadersMiddleware.InvokeAsync(HttpContext context) in D:\Work\EdisionEngineering\EdisonEngineering.API\Middleware\SecurityHeadersMiddleware.cs:line 19
+   at Swashbuckle.AspNetCore.SwaggerUI.SwaggerUIMiddleware.Invoke(HttpContext httpContext)
+   at Swashbuckle.AspNetCore.Swagger.SwaggerMiddleware.Invoke(HttpContext httpContext, ISwaggerProvider swaggerProvider)
+   at Microsoft.AspNetCore.ResponseCompression.ResponseCompressionMiddleware.InvokeCore(HttpContext context)
+   at EdisonEngineering.API.Middleware.ExceptionMiddleware.InvokeAsync(HttpContext context) in D:\Work\EdisionEngineering\EdisonEngineering.API\Middleware\ExceptionMiddleware.cs:line 27
+[2026-05-14 09:11:06 INF] Creating blog with slug: why-solar-energy {"SourceContext":"EdisonEngineering.API.Controllers.BlogsController","ActionId":"e6a2a217-2efb-4e25-bde9-4343f1e91374","ActionName":"EdisonEngineering.API.Controllers.BlogsController.Create (EdisonEngineering.API)","RequestId":"0HNLHD8A0ABTR:00000006","RequestPath":"/api/Blogs","ConnectionId":"0HNLHD8A0ABTR"}
+[2026-05-14 09:11:06 INF] Creating blog with slug: why-solar-energy {"SourceContext":"EdisonEngineering.Application.Services.BlogService","ActionId":"e6a2a217-2efb-4e25-bde9-4343f1e91374","ActionName":"EdisonEngineering.API.Controllers.BlogsController.Create (EdisonEngineering.API)","RequestId":"0HNLHD8A0ABTR:00000006","RequestPath":"/api/Blogs","ConnectionId":"0HNLHD8A0ABTR"}
+[2026-05-14 09:11:06 INF] Blog created successfully with slug: why-solar-energy {"SourceContext":"EdisonEngineering.Application.Services.BlogService","ActionId":"e6a2a217-2efb-4e25-bde9-4343f1e91374","ActionName":"EdisonEngineering.API.Controllers.BlogsController.Create (EdisonEngineering.API)","RequestId":"0HNLHD8A0ABTR:00000006","RequestPath":"/api/Blogs","ConnectionId":"0HNLHD8A0ABTR"}
+[2026-05-14 09:11:06 INF] HTTP POST /api/Blogs responded 200 in 334.5554 ms {"SourceContext":"Serilog.AspNetCore.RequestLoggingMiddleware","RequestId":"0HNLHD8A0ABTR:00000006","ConnectionId":"0HNLHD8A0ABTR"}
+[2026-05-14 09:11:13 INF] Fetching all blogs {"SourceContext":"EdisonEngineering.API.Controllers.BlogsController","ActionId":"51a2e3a5-7344-4351-ba9a-2a3180ebe92c","ActionName":"EdisonEngineering.API.Controllers.BlogsController.GetAll (EdisonEngineering.API)","RequestId":"0HNLHD8A0ABTR:00000007","RequestPath":"/api/Blogs","ConnectionId":"0HNLHD8A0ABTR"}
+[2026-05-14 09:11:13 INF] Fetching all blogs {"SourceContext":"EdisonEngineering.Application.Services.BlogService","ActionId":"51a2e3a5-7344-4351-ba9a-2a3180ebe92c","ActionName":"EdisonEngineering.API.Controllers.BlogsController.GetAll (EdisonEngineering.API)","RequestId":"0HNLHD8A0ABTR:00000007","RequestPath":"/api/Blogs","ConnectionId":"0HNLHD8A0ABTR"}
+[2026-05-14 09:11:13 INF] Blogs fetched successfully. Count: 2 {"SourceContext":"EdisonEngineering.Application.Services.BlogService","ActionId":"51a2e3a5-7344-4351-ba9a-2a3180ebe92c","ActionName":"EdisonEngineering.API.Controllers.BlogsController.GetAll (EdisonEngineering.API)","RequestId":"0HNLHD8A0ABTR:00000007","RequestPath":"/api/Blogs","ConnectionId":"0HNLHD8A0ABTR"}
+[2026-05-14 09:11:13 INF] HTTP GET /api/Blogs responded 200 in 19.5522 ms {"SourceContext":"Serilog.AspNetCore.RequestLoggingMiddleware","RequestId":"0HNLHD8A0ABTR:00000007","ConnectionId":"0HNLHD8A0ABTR"}
+[2026-05-14 09:12:11 INF] Updating blog with Id: 1 {"SourceContext":"EdisonEngineering.API.Controllers.BlogsController","ActionId":"34405da3-c1a0-4256-9d44-0a85eb4053ea","ActionName":"EdisonEngineering.API.Controllers.BlogsController.Update (EdisonEngineering.API)","RequestId":"0HNLHD8A0ABTR:00000008","RequestPath":"/api/Blogs/1","ConnectionId":"0HNLHD8A0ABTR"}
+[2026-05-14 09:12:11 INF] Updating blog with Id: 1 {"SourceContext":"EdisonEngineering.Application.Services.BlogService","ActionId":"34405da3-c1a0-4256-9d44-0a85eb4053ea","ActionName":"EdisonEngineering.API.Controllers.BlogsController.Update (EdisonEngineering.API)","RequestId":"0HNLHD8A0ABTR:00000008","RequestPath":"/api/Blogs/1","ConnectionId":"0HNLHD8A0ABTR"}
+[2026-05-14 09:12:11 WRN] Blog not found for update. Id: 1 {"SourceContext":"EdisonEngineering.Application.Services.BlogService","ActionId":"34405da3-c1a0-4256-9d44-0a85eb4053ea","ActionName":"EdisonEngineering.API.Controllers.BlogsController.Update (EdisonEngineering.API)","RequestId":"0HNLHD8A0ABTR:00000008","RequestPath":"/api/Blogs/1","ConnectionId":"0HNLHD8A0ABTR"}
+[2026-05-14 09:12:11 ERR] HTTP PUT /api/Blogs/1 responded 500 in 59.5156 ms {"SourceContext":"Serilog.AspNetCore.RequestLoggingMiddleware","RequestId":"0HNLHD8A0ABTR:00000008","ConnectionId":"0HNLHD8A0ABTR"}
+System.Exception: Blog not found
+   at EdisonEngineering.Application.Services.BlogService.UpdateAsync(Int32 id, UpdateBlogDto dto) in D:\Work\EdisionEngineering\EdisonEngineering.Application\Services\BlogService.cs:line 146
+   at EdisonEngineering.API.Controllers.BlogsController.Update(Int32 id, UpdateBlogDto dto) in D:\Work\EdisionEngineering\EdisonEngineering.API\Controllers\BlogsController.cs:line 122
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ActionMethodExecutor.TaskOfIActionResultExecutor.Execute(ActionContext actionContext, IActionResultTypeMapper mapper, ObjectMethodExecutor executor, Object controller, Object[] arguments)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.<InvokeActionMethodAsync>g__Awaited|12_0(ControllerActionInvoker invoker, ValueTask`1 actionResultValueTask)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.<InvokeNextActionFilterAsync>g__Awaited|10_0(ControllerActionInvoker invoker, Task lastTask, State next, Scope scope, Object state, Boolean isCompleted)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.Rethrow(ActionExecutedContextSealed context)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.Next(State& next, Scope& scope, Object& state, Boolean& isCompleted)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.<InvokeInnerFilterAsync>g__Awaited|13_0(ControllerActionInvoker invoker, Task lastTask, State next, Scope scope, Object state, Boolean isCompleted)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.<InvokeFilterPipelineAsync>g__Awaited|20_0(ResourceInvoker invoker, Task lastTask, State next, Scope scope, Object state, Boolean isCompleted)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.<InvokeAsync>g__Awaited|17_0(ResourceInvoker invoker, Task task, IDisposable scope)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.<InvokeAsync>g__Awaited|17_0(ResourceInvoker invoker, Task task, IDisposable scope)
+   at Microsoft.AspNetCore.Authorization.AuthorizationMiddleware.Invoke(HttpContext context)
+   at Microsoft.AspNetCore.Authentication.AuthenticationMiddleware.Invoke(HttpContext context)
+   at Serilog.AspNetCore.RequestLoggingMiddleware.Invoke(HttpContext httpContext)
+[2026-05-14 09:12:11 ERR] Unhandled exception occurred. TraceId: 0HNLHD8A0ABTR:00000008, Path: /api/Blogs/1, Method: PUT {"SourceContext":"EdisonEngineering.API.Middleware.ExceptionMiddleware","RequestId":"0HNLHD8A0ABTR:00000008","RequestPath":"/api/Blogs/1","ConnectionId":"0HNLHD8A0ABTR"}
+System.Exception: Blog not found
+   at EdisonEngineering.Application.Services.BlogService.UpdateAsync(Int32 id, UpdateBlogDto dto) in D:\Work\EdisionEngineering\EdisonEngineering.Application\Services\BlogService.cs:line 146
+   at EdisonEngineering.API.Controllers.BlogsController.Update(Int32 id, UpdateBlogDto dto) in D:\Work\EdisionEngineering\EdisonEngineering.API\Controllers\BlogsController.cs:line 122
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ActionMethodExecutor.TaskOfIActionResultExecutor.Execute(ActionContext actionContext, IActionResultTypeMapper mapper, ObjectMethodExecutor executor, Object controller, Object[] arguments)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.<InvokeActionMethodAsync>g__Awaited|12_0(ControllerActionInvoker invoker, ValueTask`1 actionResultValueTask)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.<InvokeNextActionFilterAsync>g__Awaited|10_0(ControllerActionInvoker invoker, Task lastTask, State next, Scope scope, Object state, Boolean isCompleted)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.Rethrow(ActionExecutedContextSealed context)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.Next(State& next, Scope& scope, Object& state, Boolean& isCompleted)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.<InvokeInnerFilterAsync>g__Awaited|13_0(ControllerActionInvoker invoker, Task lastTask, State next, Scope scope, Object state, Boolean isCompleted)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.<InvokeFilterPipelineAsync>g__Awaited|20_0(ResourceInvoker invoker, Task lastTask, State next, Scope scope, Object state, Boolean isCompleted)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.<InvokeAsync>g__Awaited|17_0(ResourceInvoker invoker, Task task, IDisposable scope)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.<InvokeAsync>g__Awaited|17_0(ResourceInvoker invoker, Task task, IDisposable scope)
+   at Microsoft.AspNetCore.Authorization.AuthorizationMiddleware.Invoke(HttpContext context)
+   at Microsoft.AspNetCore.Authentication.AuthenticationMiddleware.Invoke(HttpContext context)
+   at Serilog.AspNetCore.RequestLoggingMiddleware.Invoke(HttpContext httpContext)
+   at EdisonEngineering.API.Middleware.SecurityHeadersMiddleware.InvokeAsync(HttpContext context) in D:\Work\EdisionEngineering\EdisonEngineering.API\Middleware\SecurityHeadersMiddleware.cs:line 19
+   at Swashbuckle.AspNetCore.SwaggerUI.SwaggerUIMiddleware.Invoke(HttpContext httpContext)
+   at Swashbuckle.AspNetCore.Swagger.SwaggerMiddleware.Invoke(HttpContext httpContext, ISwaggerProvider swaggerProvider)
+   at Microsoft.AspNetCore.ResponseCompression.ResponseCompressionMiddleware.InvokeCore(HttpContext context)
+   at EdisonEngineering.API.Middleware.ExceptionMiddleware.InvokeAsync(HttpContext context) in D:\Work\EdisionEngineering\EdisonEngineering.API\Middleware\ExceptionMiddleware.cs:line 27
+[2026-05-14 09:12:48 INF] Updating blog with Id: 1 {"SourceContext":"EdisonEngineering.API.Controllers.BlogsController","ActionId":"34405da3-c1a0-4256-9d44-0a85eb4053ea","ActionName":"EdisonEngineering.API.Controllers.BlogsController.Update (EdisonEngineering.API)","RequestId":"0HNLHD8A0ABTR:00000009","RequestPath":"/api/Blogs/1","ConnectionId":"0HNLHD8A0ABTR"}
+[2026-05-14 09:12:48 INF] Updating blog with Id: 1 {"SourceContext":"EdisonEngineering.Application.Services.BlogService","ActionId":"34405da3-c1a0-4256-9d44-0a85eb4053ea","ActionName":"EdisonEngineering.API.Controllers.BlogsController.Update (EdisonEngineering.API)","RequestId":"0HNLHD8A0ABTR:00000009","RequestPath":"/api/Blogs/1","ConnectionId":"0HNLHD8A0ABTR"}
+[2026-05-14 09:12:48 WRN] Blog not found for update. Id: 1 {"SourceContext":"EdisonEngineering.Application.Services.BlogService","ActionId":"34405da3-c1a0-4256-9d44-0a85eb4053ea","ActionName":"EdisonEngineering.API.Controllers.BlogsController.Update (EdisonEngineering.API)","RequestId":"0HNLHD8A0ABTR:00000009","RequestPath":"/api/Blogs/1","ConnectionId":"0HNLHD8A0ABTR"}
+[2026-05-14 09:12:48 ERR] HTTP PUT /api/Blogs/1 responded 500 in 42.6587 ms {"SourceContext":"Serilog.AspNetCore.RequestLoggingMiddleware","RequestId":"0HNLHD8A0ABTR:00000009","ConnectionId":"0HNLHD8A0ABTR"}
+System.Exception: Blog not found
+   at EdisonEngineering.Application.Services.BlogService.UpdateAsync(Int32 id, UpdateBlogDto dto) in D:\Work\EdisionEngineering\EdisonEngineering.Application\Services\BlogService.cs:line 146
+   at EdisonEngineering.API.Controllers.BlogsController.Update(Int32 id, UpdateBlogDto dto) in D:\Work\EdisionEngineering\EdisonEngineering.API\Controllers\BlogsController.cs:line 122
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ActionMethodExecutor.TaskOfIActionResultExecutor.Execute(ActionContext actionContext, IActionResultTypeMapper mapper, ObjectMethodExecutor executor, Object controller, Object[] arguments)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.<InvokeActionMethodAsync>g__Awaited|12_0(ControllerActionInvoker invoker, ValueTask`1 actionResultValueTask)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.<InvokeNextActionFilterAsync>g__Awaited|10_0(ControllerActionInvoker invoker, Task lastTask, State next, Scope scope, Object state, Boolean isCompleted)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.Rethrow(ActionExecutedContextSealed context)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.Next(State& next, Scope& scope, Object& state, Boolean& isCompleted)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.<InvokeInnerFilterAsync>g__Awaited|13_0(ControllerActionInvoker invoker, Task lastTask, State next, Scope scope, Object state, Boolean isCompleted)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.<InvokeFilterPipelineAsync>g__Awaited|20_0(ResourceInvoker invoker, Task lastTask, State next, Scope scope, Object state, Boolean isCompleted)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.<InvokeAsync>g__Awaited|17_0(ResourceInvoker invoker, Task task, IDisposable scope)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.<InvokeAsync>g__Awaited|17_0(ResourceInvoker invoker, Task task, IDisposable scope)
+   at Microsoft.AspNetCore.Authorization.AuthorizationMiddleware.Invoke(HttpContext context)
+   at Microsoft.AspNetCore.Authentication.AuthenticationMiddleware.Invoke(HttpContext context)
+   at Serilog.AspNetCore.RequestLoggingMiddleware.Invoke(HttpContext httpContext)
+[2026-05-14 09:12:48 ERR] Unhandled exception occurred. TraceId: 0HNLHD8A0ABTR:00000009, Path: /api/Blogs/1, Method: PUT {"SourceContext":"EdisonEngineering.API.Middleware.ExceptionMiddleware","RequestId":"0HNLHD8A0ABTR:00000009","RequestPath":"/api/Blogs/1","ConnectionId":"0HNLHD8A0ABTR"}
+System.Exception: Blog not found
+   at EdisonEngineering.Application.Services.BlogService.UpdateAsync(Int32 id, UpdateBlogDto dto) in D:\Work\EdisionEngineering\EdisonEngineering.Application\Services\BlogService.cs:line 146
+   at EdisonEngineering.API.Controllers.BlogsController.Update(Int32 id, UpdateBlogDto dto) in D:\Work\EdisionEngineering\EdisonEngineering.API\Controllers\BlogsController.cs:line 122
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ActionMethodExecutor.TaskOfIActionResultExecutor.Execute(ActionContext actionContext, IActionResultTypeMapper mapper, ObjectMethodExecutor executor, Object controller, Object[] arguments)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.<InvokeActionMethodAsync>g__Awaited|12_0(ControllerActionInvoker invoker, ValueTask`1 actionResultValueTask)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.<InvokeNextActionFilterAsync>g__Awaited|10_0(ControllerActionInvoker invoker, Task lastTask, State next, Scope scope, Object state, Boolean isCompleted)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.Rethrow(ActionExecutedContextSealed context)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.Next(State& next, Scope& scope, Object& state, Boolean& isCompleted)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.<InvokeInnerFilterAsync>g__Awaited|13_0(ControllerActionInvoker invoker, Task lastTask, State next, Scope scope, Object state, Boolean isCompleted)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.<InvokeFilterPipelineAsync>g__Awaited|20_0(ResourceInvoker invoker, Task lastTask, State next, Scope scope, Object state, Boolean isCompleted)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.<InvokeAsync>g__Awaited|17_0(ResourceInvoker invoker, Task task, IDisposable scope)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.<InvokeAsync>g__Awaited|17_0(ResourceInvoker invoker, Task task, IDisposable scope)
+   at Microsoft.AspNetCore.Authorization.AuthorizationMiddleware.Invoke(HttpContext context)
+   at Microsoft.AspNetCore.Authentication.AuthenticationMiddleware.Invoke(HttpContext context)
+   at Serilog.AspNetCore.RequestLoggingMiddleware.Invoke(HttpContext httpContext)
+   at EdisonEngineering.API.Middleware.SecurityHeadersMiddleware.InvokeAsync(HttpContext context) in D:\Work\EdisionEngineering\EdisonEngineering.API\Middleware\SecurityHeadersMiddleware.cs:line 19
+   at Swashbuckle.AspNetCore.SwaggerUI.SwaggerUIMiddleware.Invoke(HttpContext httpContext)
+   at Swashbuckle.AspNetCore.Swagger.SwaggerMiddleware.Invoke(HttpContext httpContext, ISwaggerProvider swaggerProvider)
+   at Microsoft.AspNetCore.ResponseCompression.ResponseCompressionMiddleware.InvokeCore(HttpContext context)
+   at EdisonEngineering.API.Middleware.ExceptionMiddleware.InvokeAsync(HttpContext context) in D:\Work\EdisionEngineering\EdisonEngineering.API\Middleware\ExceptionMiddleware.cs:line 27
+[2026-05-14 09:13:37 INF] Updating blog with Id: 1 {"SourceContext":"EdisonEngineering.API.Controllers.BlogsController","ActionId":"34405da3-c1a0-4256-9d44-0a85eb4053ea","ActionName":"EdisonEngineering.API.Controllers.BlogsController.Update (EdisonEngineering.API)","RequestId":"0HNLHD8A0ABTR:0000000A","RequestPath":"/api/Blogs/1","ConnectionId":"0HNLHD8A0ABTR"}
+[2026-05-14 09:13:37 INF] Updating blog with Id: 1 {"SourceContext":"EdisonEngineering.Application.Services.BlogService","ActionId":"34405da3-c1a0-4256-9d44-0a85eb4053ea","ActionName":"EdisonEngineering.API.Controllers.BlogsController.Update (EdisonEngineering.API)","RequestId":"0HNLHD8A0ABTR:0000000A","RequestPath":"/api/Blogs/1","ConnectionId":"0HNLHD8A0ABTR"}
+[2026-05-14 09:13:37 WRN] Blog not found for update. Id: 1 {"SourceContext":"EdisonEngineering.Application.Services.BlogService","ActionId":"34405da3-c1a0-4256-9d44-0a85eb4053ea","ActionName":"EdisonEngineering.API.Controllers.BlogsController.Update (EdisonEngineering.API)","RequestId":"0HNLHD8A0ABTR:0000000A","RequestPath":"/api/Blogs/1","ConnectionId":"0HNLHD8A0ABTR"}
+[2026-05-14 09:13:37 ERR] HTTP PUT /api/Blogs/1 responded 500 in 16.4324 ms {"SourceContext":"Serilog.AspNetCore.RequestLoggingMiddleware","RequestId":"0HNLHD8A0ABTR:0000000A","ConnectionId":"0HNLHD8A0ABTR"}
+System.Exception: Blog not found
+   at EdisonEngineering.Application.Services.BlogService.UpdateAsync(Int32 id, UpdateBlogDto dto) in D:\Work\EdisionEngineering\EdisonEngineering.Application\Services\BlogService.cs:line 146
+   at EdisonEngineering.API.Controllers.BlogsController.Update(Int32 id, UpdateBlogDto dto) in D:\Work\EdisionEngineering\EdisonEngineering.API\Controllers\BlogsController.cs:line 122
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ActionMethodExecutor.TaskOfIActionResultExecutor.Execute(ActionContext actionContext, IActionResultTypeMapper mapper, ObjectMethodExecutor executor, Object controller, Object[] arguments)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.<InvokeActionMethodAsync>g__Awaited|12_0(ControllerActionInvoker invoker, ValueTask`1 actionResultValueTask)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.<InvokeNextActionFilterAsync>g__Awaited|10_0(ControllerActionInvoker invoker, Task lastTask, State next, Scope scope, Object state, Boolean isCompleted)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.Rethrow(ActionExecutedContextSealed context)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.Next(State& next, Scope& scope, Object& state, Boolean& isCompleted)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.<InvokeInnerFilterAsync>g__Awaited|13_0(ControllerActionInvoker invoker, Task lastTask, State next, Scope scope, Object state, Boolean isCompleted)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.<InvokeFilterPipelineAsync>g__Awaited|20_0(ResourceInvoker invoker, Task lastTask, State next, Scope scope, Object state, Boolean isCompleted)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.<InvokeAsync>g__Awaited|17_0(ResourceInvoker invoker, Task task, IDisposable scope)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.<InvokeAsync>g__Awaited|17_0(ResourceInvoker invoker, Task task, IDisposable scope)
+   at Microsoft.AspNetCore.Authorization.AuthorizationMiddleware.Invoke(HttpContext context)
+   at Microsoft.AspNetCore.Authentication.AuthenticationMiddleware.Invoke(HttpContext context)
+   at Serilog.AspNetCore.RequestLoggingMiddleware.Invoke(HttpContext httpContext)
+[2026-05-14 09:13:37 ERR] Unhandled exception occurred. TraceId: 0HNLHD8A0ABTR:0000000A, Path: /api/Blogs/1, Method: PUT {"SourceContext":"EdisonEngineering.API.Middleware.ExceptionMiddleware","RequestId":"0HNLHD8A0ABTR:0000000A","RequestPath":"/api/Blogs/1","ConnectionId":"0HNLHD8A0ABTR"}
+System.Exception: Blog not found
+   at EdisonEngineering.Application.Services.BlogService.UpdateAsync(Int32 id, UpdateBlogDto dto) in D:\Work\EdisionEngineering\EdisonEngineering.Application\Services\BlogService.cs:line 146
+   at EdisonEngineering.API.Controllers.BlogsController.Update(Int32 id, UpdateBlogDto dto) in D:\Work\EdisionEngineering\EdisonEngineering.API\Controllers\BlogsController.cs:line 122
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ActionMethodExecutor.TaskOfIActionResultExecutor.Execute(ActionContext actionContext, IActionResultTypeMapper mapper, ObjectMethodExecutor executor, Object controller, Object[] arguments)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.<InvokeActionMethodAsync>g__Awaited|12_0(ControllerActionInvoker invoker, ValueTask`1 actionResultValueTask)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.<InvokeNextActionFilterAsync>g__Awaited|10_0(ControllerActionInvoker invoker, Task lastTask, State next, Scope scope, Object state, Boolean isCompleted)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.Rethrow(ActionExecutedContextSealed context)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.Next(State& next, Scope& scope, Object& state, Boolean& isCompleted)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.<InvokeInnerFilterAsync>g__Awaited|13_0(ControllerActionInvoker invoker, Task lastTask, State next, Scope scope, Object state, Boolean isCompleted)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.<InvokeFilterPipelineAsync>g__Awaited|20_0(ResourceInvoker invoker, Task lastTask, State next, Scope scope, Object state, Boolean isCompleted)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.<InvokeAsync>g__Awaited|17_0(ResourceInvoker invoker, Task task, IDisposable scope)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.<InvokeAsync>g__Awaited|17_0(ResourceInvoker invoker, Task task, IDisposable scope)
+   at Microsoft.AspNetCore.Authorization.AuthorizationMiddleware.Invoke(HttpContext context)
+   at Microsoft.AspNetCore.Authentication.AuthenticationMiddleware.Invoke(HttpContext context)
+   at Serilog.AspNetCore.RequestLoggingMiddleware.Invoke(HttpContext httpContext)
+   at EdisonEngineering.API.Middleware.SecurityHeadersMiddleware.InvokeAsync(HttpContext context) in D:\Work\EdisionEngineering\EdisonEngineering.API\Middleware\SecurityHeadersMiddleware.cs:line 19
+   at Swashbuckle.AspNetCore.SwaggerUI.SwaggerUIMiddleware.Invoke(HttpContext httpContext)
+   at Swashbuckle.AspNetCore.Swagger.SwaggerMiddleware.Invoke(HttpContext httpContext, ISwaggerProvider swaggerProvider)
+   at Microsoft.AspNetCore.ResponseCompression.ResponseCompressionMiddleware.InvokeCore(HttpContext context)
+   at EdisonEngineering.API.Middleware.ExceptionMiddleware.InvokeAsync(HttpContext context) in D:\Work\EdisionEngineering\EdisonEngineering.API\Middleware\ExceptionMiddleware.cs:line 27
+[2026-05-14 09:15:30 INF] Updating blog with Id: 2 {"SourceContext":"EdisonEngineering.API.Controllers.BlogsController","ActionId":"34405da3-c1a0-4256-9d44-0a85eb4053ea","ActionName":"EdisonEngineering.API.Controllers.BlogsController.Update (EdisonEngineering.API)","RequestId":"0HNLHD8A0ABTR:0000000B","RequestPath":"/api/Blogs/2","ConnectionId":"0HNLHD8A0ABTR"}
+[2026-05-14 09:15:30 INF] Updating blog with Id: 2 {"SourceContext":"EdisonEngineering.Application.Services.BlogService","ActionId":"34405da3-c1a0-4256-9d44-0a85eb4053ea","ActionName":"EdisonEngineering.API.Controllers.BlogsController.Update (EdisonEngineering.API)","RequestId":"0HNLHD8A0ABTR:0000000B","RequestPath":"/api/Blogs/2","ConnectionId":"0HNLHD8A0ABTR"}
+[2026-05-14 09:15:30 INF] Blog updated successfully. Id: 2 {"SourceContext":"EdisonEngineering.Application.Services.BlogService","ActionId":"34405da3-c1a0-4256-9d44-0a85eb4053ea","ActionName":"EdisonEngineering.API.Controllers.BlogsController.Update (EdisonEngineering.API)","RequestId":"0HNLHD8A0ABTR:0000000B","RequestPath":"/api/Blogs/2","ConnectionId":"0HNLHD8A0ABTR"}
+[2026-05-14 09:15:30 INF] HTTP PUT /api/Blogs/2 responded 200 in 51.4160 ms {"SourceContext":"Serilog.AspNetCore.RequestLoggingMiddleware","RequestId":"0HNLHD8A0ABTR:0000000B","ConnectionId":"0HNLHD8A0ABTR"}
+[2026-05-14 09:15:42 INF] Fetching all blogs {"SourceContext":"EdisonEngineering.API.Controllers.BlogsController","ActionId":"51a2e3a5-7344-4351-ba9a-2a3180ebe92c","ActionName":"EdisonEngineering.API.Controllers.BlogsController.GetAll (EdisonEngineering.API)","RequestId":"0HNLHD8A0ABTR:0000000C","RequestPath":"/api/Blogs","ConnectionId":"0HNLHD8A0ABTR"}
+[2026-05-14 09:15:42 INF] Fetching all blogs {"SourceContext":"EdisonEngineering.Application.Services.BlogService","ActionId":"51a2e3a5-7344-4351-ba9a-2a3180ebe92c","ActionName":"EdisonEngineering.API.Controllers.BlogsController.GetAll (EdisonEngineering.API)","RequestId":"0HNLHD8A0ABTR:0000000C","RequestPath":"/api/Blogs","ConnectionId":"0HNLHD8A0ABTR"}
+[2026-05-14 09:15:42 INF] Blogs fetched successfully. Count: 2 {"SourceContext":"EdisonEngineering.Application.Services.BlogService","ActionId":"51a2e3a5-7344-4351-ba9a-2a3180ebe92c","ActionName":"EdisonEngineering.API.Controllers.BlogsController.GetAll (EdisonEngineering.API)","RequestId":"0HNLHD8A0ABTR:0000000C","RequestPath":"/api/Blogs","ConnectionId":"0HNLHD8A0ABTR"}
+[2026-05-14 09:15:42 INF] HTTP GET /api/Blogs responded 200 in 17.9101 ms {"SourceContext":"Serilog.AspNetCore.RequestLoggingMiddleware","RequestId":"0HNLHD8A0ABTR:0000000C","ConnectionId":"0HNLHD8A0ABTR"}
+[2026-05-14 09:16:05 INF] Deleting blog with Id: 1 {"SourceContext":"EdisonEngineering.API.Controllers.BlogsController","ActionId":"bdfc3a99-cb50-44f3-b1c5-e7e799ce30cc","ActionName":"EdisonEngineering.API.Controllers.BlogsController.Delete (EdisonEngineering.API)","RequestId":"0HNLHD8A0ABTR:0000000D","RequestPath":"/api/Blogs/1","ConnectionId":"0HNLHD8A0ABTR"}
+[2026-05-14 09:16:05 INF] Deleting blog with Id: 1 {"SourceContext":"EdisonEngineering.Application.Services.BlogService","ActionId":"bdfc3a99-cb50-44f3-b1c5-e7e799ce30cc","ActionName":"EdisonEngineering.API.Controllers.BlogsController.Delete (EdisonEngineering.API)","RequestId":"0HNLHD8A0ABTR:0000000D","RequestPath":"/api/Blogs/1","ConnectionId":"0HNLHD8A0ABTR"}
+[2026-05-14 09:16:05 WRN] Blog not found for deletion. Id: 1 {"SourceContext":"EdisonEngineering.Application.Services.BlogService","ActionId":"bdfc3a99-cb50-44f3-b1c5-e7e799ce30cc","ActionName":"EdisonEngineering.API.Controllers.BlogsController.Delete (EdisonEngineering.API)","RequestId":"0HNLHD8A0ABTR:0000000D","RequestPath":"/api/Blogs/1","ConnectionId":"0HNLHD8A0ABTR"}
+[2026-05-14 09:16:05 ERR] HTTP DELETE /api/Blogs/1 responded 500 in 52.1761 ms {"SourceContext":"Serilog.AspNetCore.RequestLoggingMiddleware","RequestId":"0HNLHD8A0ABTR:0000000D","ConnectionId":"0HNLHD8A0ABTR"}
+System.Exception: Blog not found
+   at EdisonEngineering.Application.Services.BlogService.DeleteAsync(Int32 id) in D:\Work\EdisionEngineering\EdisonEngineering.Application\Services\BlogService.cs:line 199
+   at EdisonEngineering.API.Controllers.BlogsController.Delete(Int32 id) in D:\Work\EdisionEngineering\EdisonEngineering.API\Controllers\BlogsController.cs:line 145
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ActionMethodExecutor.TaskOfIActionResultExecutor.Execute(ActionContext actionContext, IActionResultTypeMapper mapper, ObjectMethodExecutor executor, Object controller, Object[] arguments)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.<InvokeActionMethodAsync>g__Awaited|12_0(ControllerActionInvoker invoker, ValueTask`1 actionResultValueTask)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.<InvokeNextActionFilterAsync>g__Awaited|10_0(ControllerActionInvoker invoker, Task lastTask, State next, Scope scope, Object state, Boolean isCompleted)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.Rethrow(ActionExecutedContextSealed context)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.Next(State& next, Scope& scope, Object& state, Boolean& isCompleted)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.<InvokeInnerFilterAsync>g__Awaited|13_0(ControllerActionInvoker invoker, Task lastTask, State next, Scope scope, Object state, Boolean isCompleted)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.<InvokeFilterPipelineAsync>g__Awaited|20_0(ResourceInvoker invoker, Task lastTask, State next, Scope scope, Object state, Boolean isCompleted)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.<InvokeAsync>g__Awaited|17_0(ResourceInvoker invoker, Task task, IDisposable scope)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.<InvokeAsync>g__Awaited|17_0(ResourceInvoker invoker, Task task, IDisposable scope)
+   at Microsoft.AspNetCore.Authorization.AuthorizationMiddleware.Invoke(HttpContext context)
+   at Microsoft.AspNetCore.Authentication.AuthenticationMiddleware.Invoke(HttpContext context)
+   at Serilog.AspNetCore.RequestLoggingMiddleware.Invoke(HttpContext httpContext)
+[2026-05-14 09:16:05 ERR] Unhandled exception occurred. TraceId: 0HNLHD8A0ABTR:0000000D, Path: /api/Blogs/1, Method: DELETE {"SourceContext":"EdisonEngineering.API.Middleware.ExceptionMiddleware","RequestId":"0HNLHD8A0ABTR:0000000D","RequestPath":"/api/Blogs/1","ConnectionId":"0HNLHD8A0ABTR"}
+System.Exception: Blog not found
+   at EdisonEngineering.Application.Services.BlogService.DeleteAsync(Int32 id) in D:\Work\EdisionEngineering\EdisonEngineering.Application\Services\BlogService.cs:line 199
+   at EdisonEngineering.API.Controllers.BlogsController.Delete(Int32 id) in D:\Work\EdisionEngineering\EdisonEngineering.API\Controllers\BlogsController.cs:line 145
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ActionMethodExecutor.TaskOfIActionResultExecutor.Execute(ActionContext actionContext, IActionResultTypeMapper mapper, ObjectMethodExecutor executor, Object controller, Object[] arguments)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.<InvokeActionMethodAsync>g__Awaited|12_0(ControllerActionInvoker invoker, ValueTask`1 actionResultValueTask)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.<InvokeNextActionFilterAsync>g__Awaited|10_0(ControllerActionInvoker invoker, Task lastTask, State next, Scope scope, Object state, Boolean isCompleted)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.Rethrow(ActionExecutedContextSealed context)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.Next(State& next, Scope& scope, Object& state, Boolean& isCompleted)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.<InvokeInnerFilterAsync>g__Awaited|13_0(ControllerActionInvoker invoker, Task lastTask, State next, Scope scope, Object state, Boolean isCompleted)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.<InvokeFilterPipelineAsync>g__Awaited|20_0(ResourceInvoker invoker, Task lastTask, State next, Scope scope, Object state, Boolean isCompleted)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.<InvokeAsync>g__Awaited|17_0(ResourceInvoker invoker, Task task, IDisposable scope)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.<InvokeAsync>g__Awaited|17_0(ResourceInvoker invoker, Task task, IDisposable scope)
+   at Microsoft.AspNetCore.Authorization.AuthorizationMiddleware.Invoke(HttpContext context)
+   at Microsoft.AspNetCore.Authentication.AuthenticationMiddleware.Invoke(HttpContext context)
+   at Serilog.AspNetCore.RequestLoggingMiddleware.Invoke(HttpContext httpContext)
+   at EdisonEngineering.API.Middleware.SecurityHeadersMiddleware.InvokeAsync(HttpContext context) in D:\Work\EdisionEngineering\EdisonEngineering.API\Middleware\SecurityHeadersMiddleware.cs:line 19
+   at Swashbuckle.AspNetCore.SwaggerUI.SwaggerUIMiddleware.Invoke(HttpContext httpContext)
+   at Swashbuckle.AspNetCore.Swagger.SwaggerMiddleware.Invoke(HttpContext httpContext, ISwaggerProvider swaggerProvider)
+   at Microsoft.AspNetCore.ResponseCompression.ResponseCompressionMiddleware.InvokeCore(HttpContext context)
+   at EdisonEngineering.API.Middleware.ExceptionMiddleware.InvokeAsync(HttpContext context) in D:\Work\EdisionEngineering\EdisonEngineering.API\Middleware\ExceptionMiddleware.cs:line 27
+[2026-05-14 09:16:11 INF] Deleting blog with Id: 2 {"SourceContext":"EdisonEngineering.API.Controllers.BlogsController","ActionId":"bdfc3a99-cb50-44f3-b1c5-e7e799ce30cc","ActionName":"EdisonEngineering.API.Controllers.BlogsController.Delete (EdisonEngineering.API)","RequestId":"0HNLHD8A0ABTR:0000000E","RequestPath":"/api/Blogs/2","ConnectionId":"0HNLHD8A0ABTR"}
+[2026-05-14 09:16:11 INF] Deleting blog with Id: 2 {"SourceContext":"EdisonEngineering.Application.Services.BlogService","ActionId":"bdfc3a99-cb50-44f3-b1c5-e7e799ce30cc","ActionName":"EdisonEngineering.API.Controllers.BlogsController.Delete (EdisonEngineering.API)","RequestId":"0HNLHD8A0ABTR:0000000E","RequestPath":"/api/Blogs/2","ConnectionId":"0HNLHD8A0ABTR"}
+[2026-05-14 09:16:11 INF] Blog deleted successfully. Id: 2 {"SourceContext":"EdisonEngineering.Application.Services.BlogService","ActionId":"bdfc3a99-cb50-44f3-b1c5-e7e799ce30cc","ActionName":"EdisonEngineering.API.Controllers.BlogsController.Delete (EdisonEngineering.API)","RequestId":"0HNLHD8A0ABTR:0000000E","RequestPath":"/api/Blogs/2","ConnectionId":"0HNLHD8A0ABTR"}
+[2026-05-14 09:16:11 INF] HTTP DELETE /api/Blogs/2 responded 200 in 54.1213 ms {"SourceContext":"Serilog.AspNetCore.RequestLoggingMiddleware","RequestId":"0HNLHD8A0ABTR:0000000E","ConnectionId":"0HNLHD8A0ABTR"}
+[2026-05-14 09:16:16 INF] Fetching all blogs {"SourceContext":"EdisonEngineering.API.Controllers.BlogsController","ActionId":"51a2e3a5-7344-4351-ba9a-2a3180ebe92c","ActionName":"EdisonEngineering.API.Controllers.BlogsController.GetAll (EdisonEngineering.API)","RequestId":"0HNLHD8A0ABTR:0000000F","RequestPath":"/api/Blogs","ConnectionId":"0HNLHD8A0ABTR"}
+[2026-05-14 09:16:16 INF] Fetching all blogs {"SourceContext":"EdisonEngineering.Application.Services.BlogService","ActionId":"51a2e3a5-7344-4351-ba9a-2a3180ebe92c","ActionName":"EdisonEngineering.API.Controllers.BlogsController.GetAll (EdisonEngineering.API)","RequestId":"0HNLHD8A0ABTR:0000000F","RequestPath":"/api/Blogs","ConnectionId":"0HNLHD8A0ABTR"}
+[2026-05-14 09:16:16 INF] Blogs fetched successfully. Count: 1 {"SourceContext":"EdisonEngineering.Application.Services.BlogService","ActionId":"51a2e3a5-7344-4351-ba9a-2a3180ebe92c","ActionName":"EdisonEngineering.API.Controllers.BlogsController.GetAll (EdisonEngineering.API)","RequestId":"0HNLHD8A0ABTR:0000000F","RequestPath":"/api/Blogs","ConnectionId":"0HNLHD8A0ABTR"}
+[2026-05-14 09:16:16 INF] HTTP GET /api/Blogs responded 200 in 30.9686 ms {"SourceContext":"Serilog.AspNetCore.RequestLoggingMiddleware","RequestId":"0HNLHD8A0ABTR:0000000F","ConnectionId":"0HNLHD8A0ABTR"}

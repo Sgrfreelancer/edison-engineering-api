@@ -28,4 +28,39 @@ public class BlogRepository : IBlogRepository
             .AsNoTracking()
             .FirstOrDefaultAsync(b => b.Slug == slug);
     }
+
+     // ✅ NEW
+
+    public async Task<Blog?> GetByIdAsync(int id)
+    {
+        return await _context.Blogs
+            .FirstOrDefaultAsync(x => x.Id == id);
+    }
+
+    // ✅ NEW
+
+    public async Task AddAsync(Blog blog)
+    {
+        await _context.Blogs.AddAsync(blog);
+
+        await _context.SaveChangesAsync();
+    }
+
+    // ✅ NEW
+
+    public async Task UpdateAsync(Blog blog)
+    {
+        _context.Blogs.Update(blog);
+
+        await _context.SaveChangesAsync();
+    }
+
+    // ✅ NEW
+
+    public async Task DeleteAsync(Blog blog)
+    {
+        _context.Blogs.Remove(blog);
+
+        await _context.SaveChangesAsync();
+    }
 }

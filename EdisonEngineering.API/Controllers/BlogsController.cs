@@ -1,20 +1,18 @@
-using Microsoft.AspNetCore.Mvc;
-using EdisonEngineering.Application.Interfaces;
 using EdisonEngineering.Application.Common;
 using EdisonEngineering.Application.DTOs;
-using Asp.Versioning;
-using Microsoft.AspNetCore.RateLimiting;
-using Asp.Versioning;
+using EdisonEngineering.Application.Interfaces;
+
+using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 
 namespace EdisonEngineering.API.Controllers;
 
-[ApiVersion("1.0")]
 [ApiController]
-[Route("api/v{version:apiVersion}/[controller]")]
-[EnableRateLimiting("fixed")]
+[Route("api/[controller]")]
 public class BlogsController : ControllerBase
 {
     private readonly IBlogService _service;
+
     private readonly ILogger<BlogsController> _logger;
 
     public BlogsController(
@@ -25,29 +23,18 @@ public class BlogsController : ControllerBase
         _logger = logger;
     }
 
-    // GET: /api/blogs
+    // =========================================================
+    // GET ALL BLOGS
+    // =========================================================
+
     [HttpGet]
     public async Task<IActionResult> GetAll()
     {
-        _logger.LogInformation("Fetching all blogs");
-
-        var data = await _service.GetAllAsync();
-
-        if (data == null || !data.Any())
-        {
-            _logger.LogWarning("No blogs found");
-
-            return NotFound(new ApiResponse<List<BlogDto>>
-            {
-                Success = false,
-                Message = "No blogs found",
-                Data = new List<BlogDto>()
-            });
-        }
-
         _logger.LogInformation(
-            "Blogs fetched successfully. Count: {Count}",
-            data.Count());
+            "Fetching all blogs");
+
+        var data =
+            await _service.GetAllAsync();
 
         return Ok(new ApiResponse<List<BlogListDto>>
         {
@@ -57,26 +44,20 @@ public class BlogsController : ControllerBase
         });
     }
 
-    // GET: /api/blogs/{slug}
+    // =========================================================
+    // GET BLOG BY SLUG
+    // =========================================================
+
     [HttpGet("{slug}")]
-    public async Task<IActionResult> GetBySlug(string slug)
+    public async Task<IActionResult> GetBySlug(
+        string slug)
     {
         _logger.LogInformation(
             "Fetching blog by slug: {Slug}",
             slug);
 
-        if (string.IsNullOrWhiteSpace(slug))
-        {
-            _logger.LogWarning("Blog slug was empty");
-
-            return BadRequest(new ApiResponse<string>
-            {
-                Success = false,
-                Message = "Slug is required"
-            });
-        }
-
-        var data = await _service.GetBySlugAsync(slug);
+        var data =
+            await _service.GetBySlugAsync(slug);
 
         if (data == null)
         {
@@ -84,22 +65,89 @@ public class BlogsController : ControllerBase
                 "Blog not found for slug: {Slug}",
                 slug);
 
-            return NotFound(new ApiResponse<string>
-            {
-                Success = false,
-                Message = "Blog not found"
-            });
+            return NotFound(
+                new ApiResponse<string>
+                {
+                    Success = false,
+                    Message = "Blog not found"
+                });
         }
-
-        _logger.LogInformation(
-            "Blog fetched successfully for slug: {Slug}",
-            slug);
 
         return Ok(new ApiResponse<BlogDto>
         {
             Success = true,
             Message = "Blog fetched successfully",
             Data = data
+        });
+    }
+
+    // =========================================================
+    // CREATE BLOG
+    // =========================================================
+
+    [Authorize(Roles = "Admin")]
+
+    [HttpPost]
+    public async Task<IActionResult> Create(
+        [FromBody] CreateBlogDto dto)
+    {
+        _logger.LogInformation(
+            "Creating blog with slug: {Slug}",
+            dto.Slug);
+
+        await _service.CreateAsync(dto);
+
+        return Ok(new ApiResponse<string>
+        {
+            Success = true,
+            Message = "Blog created successfully"
+        });
+    }
+
+    // =========================================================
+    // UPDATE BLOG
+    // =========================================================
+
+    [Authorize(Roles = "Admin")]
+
+    [HttpPut("{id}")]
+    public async Task<IActionResult> Update(
+        int id,
+        [FromBody] UpdateBlogDto dto)
+    {
+        _logger.LogInformation(
+            "Updating blog with Id: {Id}",
+            id);
+
+        await _service.UpdateAsync(id, dto);
+
+        return Ok(new ApiResponse<string>
+        {
+            Success = true,
+            Message = "Blog updated successfully"
+        });
+    }
+
+    // =========================================================
+    // DELETE BLOG
+    // =========================================================
+
+    [Authorize(Roles = "Admin")]
+
+    [HttpDelete("{id}")]
+    public async Task<IActionResult> Delete(
+        int id)
+    {
+        _logger.LogInformation(
+            "Deleting blog with Id: {Id}",
+            id);
+
+        await _service.DeleteAsync(id);
+
+        return Ok(new ApiResponse<string>
+        {
+            Success = true,
+            Message = "Blog deleted successfully"
         });
     }
 }
