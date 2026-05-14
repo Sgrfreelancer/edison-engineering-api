@@ -5,6 +5,7 @@ using EdisonEngineering.Application.Common;
 using EdisonEngineering.Infrastructure.Repositories;
 using EdisonEngineering.Application.Services;
 using EdisonEngineering.API.Middleware;
+using EdisonEngineering.Infrastructure.Services;
 using Microsoft.AspNetCore.Mvc;
 using Serilog;
 using Asp.Versioning;
@@ -83,6 +84,8 @@ builder.Services.AddScoped<IJobService, JobService>();
 builder.Services.AddHealthChecks();
 builder.Services.AddScoped<IAuthRepository, AuthRepository>();
 builder.Services.AddScoped<IAuthService, AuthService>();
+builder.Services.AddScoped<JwtService>();
+builder.Services.AddScoped<IRefreshTokenRepository,RefreshTokenRepository>();
 
 // Add response compression
 builder.Services.AddResponseCompression();

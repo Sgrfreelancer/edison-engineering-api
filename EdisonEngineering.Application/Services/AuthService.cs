@@ -6,7 +6,7 @@ using BCrypt.Net;
 
 using EdisonEngineering.Application.DTOs;
 using EdisonEngineering.Application.Interfaces;
-
+using EdisonEngineering.Domain.Entities;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Logging;
 
@@ -14,20 +14,25 @@ using Microsoft.IdentityModel.Tokens;
 
 namespace EdisonEngineering.Application.Services;
 
+
 public class AuthService : IAuthService
 {
     private readonly IAuthRepository _repo;
     private readonly IConfiguration _configuration;
     private readonly ILogger<AuthService> _logger;
+    private readonly IRefreshTokenRepository
+    _refreshTokenRepository;
 
     public AuthService(
         IAuthRepository repo,
         IConfiguration configuration,
-        ILogger<AuthService> logger)
+        ILogger<AuthService> logger,
+        IRefreshTokenRepository refreshTokenRepository)
     {
         _repo = repo;
         _configuration = configuration;
         _logger = logger;
+        _refreshTokenRepository = refreshTokenRepository;
     }
 
     public async Task<LoginResponseDto?> LoginAsync(
@@ -73,6 +78,33 @@ public class AuthService : IAuthService
 
         var token = GenerateJwtToken(user);
 
+        var refreshToken =
+            GenerateRefreshToken();
+
+        var expiryMinutes =
+            Convert.ToDouble(
+                _configuration["Jwt:ExpiryMinutes"]);
+
+        var expiration =
+            DateTime.UtcNow.AddMinutes(
+                expiryMinutes);
+
+        await _refreshTokenRepository.AddAsync(
+            new RefreshToken
+            {
+                UserId = user.Id,
+
+                Token = refreshToken,
+
+                ExpiryDate =
+                    DateTime.UtcNow.AddDays(7),
+
+                IsRevoked = false
+            });
+
+        await _refreshTokenRepository
+            .SaveChangesAsync();
+                
         _logger.LogInformation(
             "Login successful for email: {Email}",
             dto.Email);
@@ -80,8 +112,15 @@ public class AuthService : IAuthService
         return new LoginResponseDto
         {
             Token = token,
+
+            RefreshToken = refreshToken,
+
+            Expiration = expiration,
+
             Name = user.Name,
+
             Email = user.Email,
+
             Role = user.Role
         };
     }
@@ -138,5 +177,11 @@ public class AuthService : IAuthService
 
         return new JwtSecurityTokenHandler()
             .WriteToken(token);
+    }
+
+    private string GenerateRefreshToken()
+    {
+        return Guid.NewGuid().ToString()
+            + Guid.NewGuid().ToString();
     }
 }
