@@ -1,9 +1,8 @@
 namespace EdisonEngineering.Domain.Entities;
+using EdisonEngineering.Domain.Common;
 
-public class Blog
+public class Blog : BaseEntity
 {
-    public int Id { get; set; }
-
     public string Title { get; set; }
     public string Slug { get; set; }
 

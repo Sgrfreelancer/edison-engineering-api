@@ -29,6 +29,9 @@ public class AppDbContext : DbContext
     {
         base.OnModelCreating(modelBuilder);
 
+        modelBuilder.Entity<Blog>()
+            .HasQueryFilter(x => !x.IsDeleted);
+
         // Menu self-reference relationship
         modelBuilder.Entity<Menu>()
             .HasMany(m => m.Children)

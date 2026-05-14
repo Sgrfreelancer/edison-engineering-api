@@ -131,7 +131,8 @@ public class BlogService : IBlogService
             MetaTitle = dto.MetaTitle,
             MetaDescription = dto.MetaDescription,
             ImageUrl = dto.ImageUrl,
-            CreatedAt = DateTime.UtcNow
+            CreatedAt = DateTime.UtcNow,
+            CreatedBy = "Admin"
         };
 
         await _repo.AddAsync(blog);
@@ -188,6 +189,8 @@ public class BlogService : IBlogService
         blog.MetaTitle = dto.MetaTitle;
         blog.MetaDescription = dto.MetaDescription;
         blog.ImageUrl = dto.ImageUrl;
+        blog.UpdatedAt = DateTime.UtcNow;
+        blog.UpdatedBy = "Admin";
 
         await _repo.UpdateAsync(blog);
 
@@ -203,7 +206,7 @@ public class BlogService : IBlogService
     public async Task DeleteAsync(int id)
     {
         _logger.LogInformation(
-            "Deleting blog with Id: {Id}",
+            "Soft deleting blog with Id: {Id}",
             id);
 
         var blog =
@@ -219,10 +222,18 @@ public class BlogService : IBlogService
                 "Blog not found");
         }
 
-        await _repo.DeleteAsync(blog);
+        // ✅ SOFT DELETE
+
+        blog.IsDeleted = true;
+
+        blog.DeletedAt = DateTime.UtcNow;
+
+        blog.DeletedBy = "Admin";
+
+        await _repo.UpdateAsync(blog);
 
         _logger.LogInformation(
-            "Blog deleted successfully. Id: {Id}",
+            "Blog soft deleted successfully. Id: {Id}",
             id);
     }
 }
