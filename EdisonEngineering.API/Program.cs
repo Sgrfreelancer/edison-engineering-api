@@ -268,6 +268,7 @@ app.UseHttpsRedirection();
 app.UseRouting();
 
 app.UseAuthentication();
+app.UseMiddleware<AuditMiddleware>();
 app.UseAuthorization();
 
 app.MapControllers();
