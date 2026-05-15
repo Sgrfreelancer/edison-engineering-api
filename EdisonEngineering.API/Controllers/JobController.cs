@@ -6,6 +6,7 @@ using Asp.Versioning;
 using Microsoft.AspNetCore.RateLimiting;
 using Asp.Versioning;
 using Microsoft.AspNetCore.Authorization;
+using EdisonEngineering.API.Auth;
 using System.Security.Claims;
 
 namespace EdisonEngineering.API.Controllers;
@@ -60,7 +61,7 @@ public class JobController : ControllerBase
     }
 
     // POST: /api/jobs/apply
-    [Authorize(Roles = "Admin")]
+    [HasPermission("job.manage")]
     [HttpPost("apply")]
     public async Task<IActionResult> Apply([FromBody] ApplyJobDto dto)
     {

@@ -10,10 +10,12 @@ using Microsoft.AspNetCore.Mvc;
 using Serilog;
 using Asp.Versioning;
 using System.Threading.RateLimiting;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.IdentityModel.Tokens;
 using System.Text;
 using Microsoft.OpenApi.Models;
+using EdisonEngineering.API.Auth;
 
 Log.Logger = new LoggerConfiguration()
     .ReadFrom.Configuration(
@@ -142,6 +144,48 @@ builder.Services
                             jwtSettings["Key"]))
             };
     });
+
+builder.Services.AddScoped<
+    IAuthorizationHandler,
+    PermissionHandler>();
+
+builder.Services.AddAuthorization(options =>
+{
+    options.AddPolicy(
+        "blog.create",
+        policy =>
+            policy.Requirements.Add(
+                new PermissionRequirement(
+                    "blog.create")));
+
+    options.AddPolicy(
+        "blog.edit",
+        policy =>
+            policy.Requirements.Add(
+                new PermissionRequirement(
+                    "blog.edit")));
+
+    options.AddPolicy(
+        "blog.delete",
+        policy =>
+            policy.Requirements.Add(
+                new PermissionRequirement(
+                    "blog.delete")));
+
+    options.AddPolicy(
+        "lead.view",
+        policy =>
+            policy.Requirements.Add(
+                new PermissionRequirement(
+                    "lead.view")));
+
+    options.AddPolicy(
+        "job.manage",
+        policy =>
+            policy.Requirements.Add(
+                new PermissionRequirement(
+                    "job.manage")));
+});
 
 // ✅ Add Swagger services
 builder.Services.AddEndpointsApiExplorer();

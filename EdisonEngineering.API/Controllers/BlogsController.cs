@@ -4,6 +4,7 @@ using EdisonEngineering.Application.Interfaces;
 
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using EdisonEngineering.API.Auth;
 
 namespace EdisonEngineering.API.Controllers;
 
@@ -87,7 +88,7 @@ public class BlogsController : ControllerBase
     // CREATE BLOG
     // =========================================================
 
-    [Authorize(Roles = "Admin")]
+    [HasPermission("blog.create")]
 
     [HttpPost]
     public async Task<IActionResult> Create(
@@ -110,7 +111,7 @@ public class BlogsController : ControllerBase
     // UPDATE BLOG
     // =========================================================
 
-    [Authorize(Roles = "Admin")]
+    [HasPermission("blog.edit")]
 
     [HttpPut("{id}")]
     public async Task<IActionResult> Update(
@@ -134,7 +135,7 @@ public class BlogsController : ControllerBase
     // DELETE BLOG
     // =========================================================
 
-    [Authorize(Roles = "Admin")]
+    [HasPermission("blog.delete")]
 
     [HttpDelete("{id}")]
     public async Task<IActionResult> Delete(
