@@ -8,5 +8,7 @@ public interface IRefreshTokenRepository
 
     Task<RefreshToken?> GetAsync(string token);
 
+    Task UpdateAsync(RefreshToken token);
+
     Task SaveChangesAsync();
 }

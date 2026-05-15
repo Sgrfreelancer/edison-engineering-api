@@ -125,6 +125,113 @@ public class AuthService : IAuthService
         };
     }
 
+    public async Task<LoginResponseDto?>
+        RefreshTokenAsync(
+            RefreshTokenRequestDto dto)
+    {
+        _logger.LogInformation(
+            "Refresh token request received");
+
+        var existingToken =
+            await _refreshTokenRepository
+                .GetAsync(dto.RefreshToken);
+
+        if (existingToken == null)
+        {
+            _logger.LogWarning(
+                "Invalid refresh token");
+
+            return null;
+        }
+
+        if (existingToken.IsRevoked)
+        {
+            _logger.LogWarning(
+                "Revoked refresh token used");
+
+            return null;
+        }
+
+        if (existingToken.ExpiryDate
+            < DateTime.UtcNow)
+        {
+            _logger.LogWarning(
+                "Expired refresh token used");
+
+            return null;
+        }
+
+        var user =
+            await _repo.GetByIdAsync(
+                existingToken.UserId);
+
+        if (user == null)
+        {
+            _logger.LogWarning(
+                "User not found for refresh token");
+
+            return null;
+        }
+
+        // ✅ REVOKE OLD TOKEN
+
+        existingToken.IsRevoked = true;
+
+        await _refreshTokenRepository
+            .UpdateAsync(existingToken);
+
+        // ✅ GENERATE NEW TOKENS
+
+        var newJwt =
+            GenerateJwtToken(user);
+
+        var newRefreshToken =
+            GenerateRefreshToken();
+
+        var expiryMinutes =
+            Convert.ToDouble(
+                _configuration["Jwt:ExpiryMinutes"]);
+
+        var expiration =
+            DateTime.UtcNow.AddMinutes(
+                expiryMinutes);
+
+        await _refreshTokenRepository
+            .AddAsync(
+                new RefreshToken
+                {
+                    UserId = user.Id,
+
+                    Token = newRefreshToken,
+
+                    ExpiryDate =
+                        DateTime.UtcNow.AddDays(7),
+
+                    IsRevoked = false
+                });
+
+        await _refreshTokenRepository
+            .SaveChangesAsync();
+
+        _logger.LogInformation(
+            "Refresh token generated successfully");
+
+        return new LoginResponseDto
+        {
+            Token = newJwt,
+
+            RefreshToken = newRefreshToken,
+
+            Expiration = expiration,
+
+            Name = user.Name,
+
+            Email = user.Email,
+
+            Role = user.Role
+        };
+    }
+
     private string GenerateJwtToken(
         EdisonEngineering.Domain.Entities.AppUser user)
     {
@@ -178,7 +285,7 @@ public class AuthService : IAuthService
         return new JwtSecurityTokenHandler()
             .WriteToken(token);
     }
-
+    
     private string GenerateRefreshToken()
     {
         return Guid.NewGuid().ToString()

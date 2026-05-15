@@ -4,6 +4,7 @@ using EdisonEngineering.Infrastructure.Persistence;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace EdisonEngineering.Infrastructure.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    partial class AppDbContextModelSnapshot : ModelSnapshot
+    [Migration("20260515134302_AddedPermissionTables")]
+    partial class AddedPermissionTables
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -371,38 +374,6 @@ namespace EdisonEngineering.Infrastructure.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("Permissions");
-
-                    b.HasData(
-                        new
-                        {
-                            Id = 1,
-                            Code = "blog.create",
-                            Name = "Create Blog"
-                        },
-                        new
-                        {
-                            Id = 2,
-                            Code = "blog.edit",
-                            Name = "Edit Blog"
-                        },
-                        new
-                        {
-                            Id = 3,
-                            Code = "blog.delete",
-                            Name = "Delete Blog"
-                        },
-                        new
-                        {
-                            Id = 4,
-                            Code = "lead.view",
-                            Name = "View Leads"
-                        },
-                        new
-                        {
-                            Id = 5,
-                            Code = "job.manage",
-                            Name = "Manage Jobs"
-                        });
                 });
 
             modelBuilder.Entity("EdisonEngineering.Domain.Entities.Project", b =>
@@ -486,38 +457,6 @@ namespace EdisonEngineering.Infrastructure.Migrations
                     b.HasIndex("PermissionId");
 
                     b.ToTable("RolePermissions");
-
-                    b.HasData(
-                        new
-                        {
-                            Id = 1,
-                            PermissionId = 1,
-                            Role = "Admin"
-                        },
-                        new
-                        {
-                            Id = 2,
-                            PermissionId = 2,
-                            Role = "Admin"
-                        },
-                        new
-                        {
-                            Id = 3,
-                            PermissionId = 3,
-                            Role = "Admin"
-                        },
-                        new
-                        {
-                            Id = 4,
-                            PermissionId = 4,
-                            Role = "Admin"
-                        },
-                        new
-                        {
-                            Id = 5,
-                            PermissionId = 5,
-                            Role = "Admin"
-                        });
                 });
 
             modelBuilder.Entity("EdisonEngineering.Domain.Entities.Service", b =>

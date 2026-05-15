@@ -19,4 +19,10 @@ public class AuthRepository : IAuthRepository
         return await _context.AppUsers
             .FirstOrDefaultAsync(x => x.Email == email);
     }
+
+    public async Task<AppUser?> GetByIdAsync(int id)
+    {
+        return await _context.AppUsers
+            .FirstOrDefaultAsync(x => x.Id == id);
+    }
 }

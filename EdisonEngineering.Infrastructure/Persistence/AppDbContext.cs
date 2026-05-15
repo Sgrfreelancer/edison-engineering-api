@@ -25,6 +25,8 @@ public class AppDbContext : DbContext
     public DbSet<JobApplication> JobApplications { get; set; }
     public DbSet<AppUser> AppUsers { get; set; }
     public DbSet<RefreshToken> RefreshTokens { get; set; }
+    public DbSet<Permission> Permissions { get; set; }
+    public DbSet<RolePermission> RolePermissions { get; set; }
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
@@ -39,6 +41,12 @@ public class AppDbContext : DbContext
             .WithOne(m => m.Parent)
             .HasForeignKey(m => m.ParentId)
             .OnDelete(DeleteBehavior.Restrict);
+
+        // RolePermission -> Permission relationship
+        modelBuilder.Entity<RolePermission>()
+            .HasOne(x => x.Permission)
+            .WithMany()
+            .HasForeignKey(x => x.PermissionId);
 
         // CityPricing decimal precision
         modelBuilder.Entity<CityPricing>()
@@ -66,5 +74,82 @@ public class AppDbContext : DbContext
         modelBuilder.Entity<Subsidy>()
             .Property(x => x.SubsidyAmountPerKW)
             .HasPrecision(18, 2);
+
+        modelBuilder.Entity<Permission>()
+            .HasData(
+
+            new Permission
+            {
+                Id = 1,
+                Name = "Create Blog",
+                Code = "blog.create"
+            },
+
+            new Permission
+            {
+                Id = 2,
+                Name = "Edit Blog",
+                Code = "blog.edit"
+            },
+
+            new Permission
+            {
+                Id = 3,
+                Name = "Delete Blog",
+                Code = "blog.delete"
+            },
+
+            new Permission
+            {
+                Id = 4,
+                Name = "View Leads",
+                Code = "lead.view"
+            },
+
+            new Permission
+            {
+                Id = 5,
+                Name = "Manage Jobs",
+                Code = "job.manage"
+            });
+
+        modelBuilder.Entity<RolePermission>()
+            .HasData(
+
+            new RolePermission
+            {
+                Id = 1,
+                Role = "Admin",
+                PermissionId = 1
+            },
+
+            new RolePermission
+            {
+                Id = 2,
+                Role = "Admin",
+                PermissionId = 2
+            },
+
+            new RolePermission
+            {
+                Id = 3,
+                Role = "Admin",
+                PermissionId = 3
+            },
+
+            new RolePermission
+            {
+                Id = 4,
+                Role = "Admin",
+                PermissionId = 4
+            },
+
+            new RolePermission
+            {
+                Id = 5,
+                Role = "Admin",
+                PermissionId = 5
+            });
+
     }
 }
