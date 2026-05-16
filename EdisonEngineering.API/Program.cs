@@ -54,14 +54,20 @@ builder.Services.AddControllers()
 
 builder.Services.AddApiVersioning(options =>
 {
-    options.DefaultApiVersion = new Asp.Versioning.ApiVersion(1, 0);
+    options.DefaultApiVersion = new ApiVersion(1, 0);
 
     options.AssumeDefaultVersionWhenUnspecified = true;
 
     options.ReportApiVersions = true;
 
     options.ApiVersionReader =
-        new Asp.Versioning.UrlSegmentApiVersionReader();
+        new UrlSegmentApiVersionReader();
+})
+.AddApiExplorer(options =>
+{
+    options.GroupNameFormat = "'v'V";
+
+    options.SubstituteApiVersionInUrl = true;
 });
 
 builder.Services.AddDbContext<AppDbContext>(options =>

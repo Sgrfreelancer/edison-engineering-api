@@ -1,6 +1,7 @@
 using EdisonEngineering.Application.Common;
 using EdisonEngineering.Application.DTOs;
 using EdisonEngineering.Application.Interfaces;
+using Asp.Versioning;
 
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
@@ -10,7 +11,8 @@ using EdisonEngineering.API.Auth;
 namespace EdisonEngineering.API.Controllers;
 
 [ApiController]
-[Route("api/[controller]")]
+[ApiVersion("1.0")]
+[Route("api/v{version:apiVersion}/[controller]")]
 public class BlogsController : ControllerBase
 {
     private readonly IBlogService _service;
