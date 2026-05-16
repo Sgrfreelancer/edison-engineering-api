@@ -2,5 +2,5 @@ namespace EdisonEngineering.Application.DTOs;
 
 public class RefreshTokenRequestDto
 {
-    public string RefreshToken { get; set; }
+    public required string RefreshToken { get; set; }
 }

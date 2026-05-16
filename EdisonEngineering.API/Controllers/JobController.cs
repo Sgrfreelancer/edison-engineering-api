@@ -4,7 +4,6 @@ using Microsoft.AspNetCore.Mvc;
 using EdisonEngineering.Application.Common;
 using Asp.Versioning;
 using Microsoft.AspNetCore.RateLimiting;
-using Asp.Versioning;
 using Microsoft.AspNetCore.Authorization;
 using EdisonEngineering.API.Auth;
 using System.Security.Claims;

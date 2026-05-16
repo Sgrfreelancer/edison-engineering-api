@@ -73,7 +73,7 @@ public class AuthController : ControllerBase
     }
 
     [HttpPost("refresh")]
-    public async Task<IActionResult>RefreshToken(RefreshTokenRequestDto dto)
+    public async Task<IActionResult> RefreshToken(RefreshTokenRequestDto dto)
     {
         var result =
             await _service

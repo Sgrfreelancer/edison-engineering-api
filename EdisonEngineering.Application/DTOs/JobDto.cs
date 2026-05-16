@@ -1,8 +1,8 @@
 public class JobDto
 {
     public int Id { get; set; }
-    public string Title { get; set; }
-    public string Department { get; set; }
-    public string Location { get; set; }
-    public string Description { get; set; }
+    public required string Title { get; set; }
+    public required string Department { get; set; }
+    public required string Location { get; set; }
+    public required string Description { get; set; }
 }

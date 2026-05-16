@@ -29,7 +29,7 @@ public class BlogRepository : IBlogRepository
             .FirstOrDefaultAsync(b => b.Slug == slug);
     }
 
-     // ✅ NEW
+    // ✅ NEW
 
     public async Task<Blog?> GetByIdAsync(int id)
     {

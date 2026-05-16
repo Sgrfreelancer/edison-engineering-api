@@ -38,11 +38,20 @@ builder.Services.AddControllers()
     {
         options.InvalidModelStateResponseFactory = context =>
         {
-            var errors = context.ModelState
-                .Where(x => x.Value.Errors.Count > 0)
-                .SelectMany(x => x.Value.Errors)
-                .Select(x => x.ErrorMessage)
-                .ToList();
+            var errors = new List<string>();
+
+            var modelState = context.ModelState;
+
+            if (modelState != null)
+            {
+                var nonNullModelState = modelState!;
+
+                errors = nonNullModelState
+                    .Where(x => x.Value != null && x.Value.Errors.Count > 0)
+                    .SelectMany(x => x.Value!.Errors)
+                    .Select(x => x.ErrorMessage)
+                    .ToList();
+            }
 
             var response = new ApiResponse<object>
             {
@@ -105,7 +114,7 @@ builder.Services
 builder.Services.AddScoped<IAuthRepository, AuthRepository>();
 builder.Services.AddScoped<IAuthService, AuthService>();
 builder.Services.AddScoped<JwtService>();
-builder.Services.AddScoped<IRefreshTokenRepository,RefreshTokenRepository>();
+builder.Services.AddScoped<IRefreshTokenRepository, RefreshTokenRepository>();
 
 // Add response compression
 builder.Services.AddResponseCompression();
@@ -305,7 +314,9 @@ builder.Services
         var jwtSettings =
             builder.Configuration
                 .GetSection("Jwt")
-                .Get<JwtSettings>();
+                .Get<JwtSettings>()
+                ?? throw new InvalidOperationException(
+                    "Jwt configuration section is missing.");
 
         options.TokenValidationParameters =
             new TokenValidationParameters
@@ -435,8 +446,8 @@ app.UseOutputCache();
 // ✅ Enable Swagger ONLY in Development
 // if (app.Environment.IsDevelopment())
 // {
-    app.UseSwagger();
-    app.UseSwaggerUI();
+app.UseSwagger();
+app.UseSwaggerUI();
 // }
 
 app.UseMiddleware<SecurityHeadersMiddleware>();

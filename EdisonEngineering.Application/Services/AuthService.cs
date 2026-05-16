@@ -104,7 +104,7 @@ public class AuthService : IAuthService
 
         await _refreshTokenRepository
             .SaveChangesAsync();
-                
+
         _logger.LogInformation(
             "Login successful for email: {Email}",
             dto.Email);
@@ -280,7 +280,7 @@ public class AuthService : IAuthService
         return new JwtSecurityTokenHandler()
             .WriteToken(token);
     }
-    
+
     private string GenerateRefreshToken()
     {
         return Guid.NewGuid().ToString()

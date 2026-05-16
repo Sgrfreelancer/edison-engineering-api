@@ -50,11 +50,11 @@ public class LeadService : ILeadService
         {
             Name = dto.Name,
             Phone = dto.Phone,
-            Email = dto.Email,
+            Email = dto.Email ?? string.Empty,
             City = dto.City,
             ServiceType = dto.ServiceType,
             Message = dto.Message,
-            Source = dto.Source
+            Source = dto.Source ?? "Website"
         };
 
         await _repo.AddAsync(lead);

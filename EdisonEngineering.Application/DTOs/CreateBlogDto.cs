@@ -6,14 +6,14 @@ public class CreateBlogDto
 {
     [Required]
     [MaxLength(200)]
-    public string Title { get; set; }
+    public required string Title { get; set; }
 
     [Required]
     [MaxLength(200)]
-    public string Slug { get; set; }
+    public required string Slug { get; set; }
 
     [Required]
-    public string Content { get; set; }
+    public required string Content { get; set; }
 
     [MaxLength(200)]
     public string? MetaTitle { get; set; }

@@ -3,7 +3,7 @@ namespace EdisonEngineering.Application
 
 public class SerilogSettings
 {
-    public string Path { get; set; }
+    public required string Path { get; set; }
 
     public int RetainedFileCountLimit
     {
@@ -11,3 +11,4 @@ public class SerilogSettings
         set;
     }
 }
+

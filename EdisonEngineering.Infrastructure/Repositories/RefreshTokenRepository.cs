@@ -32,7 +32,7 @@ public class RefreshTokenRepository : IRefreshTokenRepository
 
         await Task.CompletedTask;
     }
-    
+
     public async Task SaveChangesAsync()
     {
         await _context.SaveChangesAsync();

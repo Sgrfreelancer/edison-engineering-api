@@ -1,6 +1,6 @@
 using EdisonEngineering.Domain.Entities;
 
-namespace EdisonEngineering.Application.Interfaces; 
+namespace EdisonEngineering.Application.Interfaces;
 
 public interface ISubsidyRepository
 {

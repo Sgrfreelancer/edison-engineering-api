@@ -33,7 +33,16 @@ public class CityService : ICityService
         var result = data.Select(c => new CityDto
         {
             Name = c.Name,
-            Slug = c.Slug
+            Slug = c.Slug,
+            Description = c.Description,
+            ContactNumber = c.ContactNumber,
+            Email = c.Email,
+            Projects = c.Projects?.Select(p => new ProjectDto
+            {
+                Title = p.Title,
+                Description = p.Description,
+                ImageUrl = p.ImageUrl
+            }).ToList() ?? new()
         }).ToList();
 
         _logger.LogInformation(

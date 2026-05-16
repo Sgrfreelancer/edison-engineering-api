@@ -24,8 +24,11 @@ public class JwtService
 
     public string GenerateToken(AppUser user)
     {
-        var key = Encoding.UTF8.GetBytes(
-            _configuration["Jwt:Key"]);
+        var keyText = _configuration["Jwt:Key"]
+            ?? throw new InvalidOperationException(
+                "Jwt:Key is not configured.");
+
+        var key = Encoding.UTF8.GetBytes(keyText);
 
         var claims = new[]
         {
@@ -54,13 +57,19 @@ public class JwtService
         var expires =
             DateTime.UtcNow.AddMinutes(15);
 
+        var issuer = _configuration["Jwt:Issuer"]
+            ?? throw new InvalidOperationException(
+                "Jwt:Issuer is not configured.");
+
+        var audience = _configuration["Jwt:Audience"]
+            ?? throw new InvalidOperationException(
+                "Jwt:Audience is not configured.");
+
         var token =
             new JwtSecurityToken(
-                issuer:
-                    _configuration["Jwt:Issuer"],
+                issuer: issuer,
 
-                audience:
-                    _configuration["Jwt:Audience"],
+                audience: audience,
 
                 claims: claims,
 

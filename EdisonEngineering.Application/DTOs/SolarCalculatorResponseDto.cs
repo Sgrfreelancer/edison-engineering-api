@@ -7,7 +7,7 @@ public class SolarCalculatorResponseDto
 
     public decimal SubsidyAmount { get; set; }
     public decimal FinalCost { get; set; }
-    
+
     public decimal MonthlySavings { get; set; }
     public decimal YearlySavings { get; set; }
 

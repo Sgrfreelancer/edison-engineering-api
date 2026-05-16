@@ -7,7 +7,7 @@ public interface IBlogRepository
     Task<List<Blog>> GetAllAsync();
     Task<Blog?> GetBySlugAsync(string slug);
 
-     // ✅ NEW METHODS
+    // ✅ NEW METHODS
 
     Task<Blog?> GetByIdAsync(int id);
 
