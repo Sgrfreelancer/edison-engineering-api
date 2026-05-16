@@ -1,7 +1,9 @@
+using EdisonEngineering.Application.Common;
 using EdisonEngineering.Application.DTOs;
 using EdisonEngineering.Application.Interfaces;
 using EdisonEngineering.Domain.Entities;
 using Microsoft.Extensions.Logging;
+using Microsoft.Extensions.Options;
 
 namespace EdisonEngineering.Application.Services;
 
@@ -10,14 +12,17 @@ public class LeadService : ILeadService
     private readonly ILeadRepository _repo;
     private readonly ILogger<LeadService> _logger;
     private readonly IBackgroundTaskQueue _backgroundTaskQueue;
+    private readonly EmailSettings _emailSettings;
 
     public LeadService(
         ILeadRepository repo,
         IBackgroundTaskQueue backgroundTaskQueue,
+        IOptions<EmailSettings> emailSettings,
         ILogger<LeadService> logger)
     {
         _repo = repo;
         _backgroundTaskQueue = backgroundTaskQueue;
+        _emailSettings = emailSettings.Value;
         _logger = logger;
     }
 
@@ -56,13 +61,39 @@ public class LeadService : ILeadService
         _backgroundTaskQueue.QueueEmail(
             new EmailMessageDto
             {
-                To = "admin@edison.com",
+                To = _emailSettings.AdminEmail,
 
                 Subject =
                     "New Lead Received",
 
                 Body =
-                    $"Lead from {dto.Name}"
+$"""
+<h2>New Lead Received</h2>
+
+<p>
+<b>Name:</b> {dto.Name}
+</p>
+
+<p>
+<b>Phone:</b> {dto.Phone}
+</p>
+
+<p>
+<b>Email:</b> {dto.Email}
+</p>
+
+<p>
+<b>City:</b> {dto.City}
+</p>
+
+<p>
+<b>Service:</b> {dto.ServiceType}
+</p>
+
+<p>
+<b>Message:</b> {dto.Message}
+</p>
+"""
             });
 
         _logger.LogInformation(
