@@ -1,4 +1,5 @@
 using EdisonEngineering.Domain.Entities;
+using EdisonEngineering.Application.DTOs;
 
 namespace EdisonEngineering.Application.Interfaces;
 
@@ -18,8 +19,5 @@ public interface IBlogRepository
     Task DeleteAsync(Blog blog);
 
     Task<(List<Blog> Blogs, int TotalCount)>
-    GetPagedAsync(
-        int page,
-        int pageSize,
-        string? search);
+    GetPagedAsync(BlogFilterDto filter);
 }

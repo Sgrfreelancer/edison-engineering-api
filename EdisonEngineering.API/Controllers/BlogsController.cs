@@ -92,6 +92,34 @@ public class BlogsController : ControllerBase
     }
 
     // =========================================================
+    // GET PAGED BLOGS WITH FILTER
+    // =========================================================
+
+    [OutputCache(
+        PolicyName = "blogs-cache")]
+    [HttpGet("paged")]
+    public async Task<IActionResult> GetPaged(
+        [FromQuery] BlogFilterDto filter)
+    {
+        _logger.LogInformation(
+            "Fetching paged blogs with filter");
+
+        var result =
+            await _service.GetPagedAsync(filter);
+
+        return Ok(
+            new ApiResponse<PagedResponse<BlogListDto>>
+            {
+                Success = true,
+
+                Message =
+                    "Blogs fetched successfully",
+
+                Data = result
+            });
+    }
+
+    // =========================================================
     // CREATE BLOG
     // =========================================================
 

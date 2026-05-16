@@ -14,4 +14,7 @@ public interface IBlogService
     Task UpdateAsync(int id, UpdateBlogDto dto);
 
     Task DeleteAsync(int id);
+
+    Task<PagedResponse<BlogListDto>>
+    GetPagedAsync(BlogFilterDto filter);
 }

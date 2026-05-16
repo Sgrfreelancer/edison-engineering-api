@@ -34,11 +34,17 @@ public class BlogService : IBlogService
             query.PageSize,
             query.Search);
 
+        var filter = new BlogFilterDto
+        {
+            Page = query.Page,
+            PageSize = query.PageSize,
+            Search = query.Search,
+            SortBy = null,
+            Descending = false
+        };
+
         var (blogs, totalCount) =
-            await _repo.GetPagedAsync(
-                query.Page,
-                query.PageSize,
-                query.Search);
+            await _repo.GetPagedAsync(filter);
 
         var items = blogs.Select(b => new BlogListDto
         {
@@ -235,5 +241,53 @@ public class BlogService : IBlogService
         _logger.LogInformation(
             "Blog soft deleted successfully. Id: {Id}",
             id);
+    }
+
+    // =========================================================
+    // GET PAGED BLOGS WITH FILTER
+    // =========================================================
+
+    public async Task<PagedResponse<BlogListDto>>
+    GetPagedAsync(BlogFilterDto filter)
+    {
+        _logger.LogInformation(
+            "Fetching paged blogs with filter. Page: {Page}, PageSize: {PageSize}, Search: {Search}, SortBy: {SortBy}",
+            filter.Page,
+            filter.PageSize,
+            filter.Search,
+            filter.SortBy);
+
+        var (blogs, totalCount) =
+            await _repo.GetPagedAsync(filter);
+
+        var items =
+            blogs.Select(x =>
+                new BlogListDto
+                {
+                    Title = x.Title,
+
+                    Slug = x.Slug,
+
+                    ImageUrl = x.ImageUrl,
+
+                    CreatedAt = x.CreatedAt
+                })
+            .ToList();
+
+        return new PagedResponse<BlogListDto>
+        {
+            Items = items,
+
+            Page = filter.Page,
+
+            PageSize = filter.PageSize,
+
+            TotalCount = totalCount,
+
+            TotalPages =
+                (int)Math.Ceiling(
+                    totalCount /
+                    (double)filter.PageSize)
+        };
     }
 }

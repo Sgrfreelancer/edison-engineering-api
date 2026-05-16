@@ -1,4 +1,5 @@
 using EdisonEngineering.Application.Interfaces;
+using EdisonEngineering.Application.DTOs;
 using EdisonEngineering.Domain.Entities;
 using EdisonEngineering.Infrastructure.Persistence;
 using Microsoft.EntityFrameworkCore;
@@ -66,35 +67,65 @@ public class BlogRepository : IBlogRepository
     }
 
     public async Task<(List<Blog> Blogs, int TotalCount)>
-    GetPagedAsync(
-        int page,
-        int pageSize,
-        string? search)
+    GetPagedAsync(BlogFilterDto filter)
     {
         var query = _context.Blogs
             .AsNoTracking()
             .AsQueryable();
 
-        // ✅ SEARCH
+        // =====================================
+        // SEARCH
+        // =====================================
 
-        if (!string.IsNullOrWhiteSpace(search))
+        if (!string.IsNullOrWhiteSpace(
+            filter.Search))
         {
             query = query.Where(x =>
-                x.Title.Contains(search));
+                x.Title.Contains(filter.Search));
         }
 
-        // ✅ TOTAL COUNT
+        // =====================================
+        // SORTING
+        // =====================================
+
+        query =
+            filter.SortBy?.ToLower() switch
+            {
+                "title" =>
+                    filter.Descending
+                        ? query.OrderByDescending(
+                            x => x.Title)
+                        : query.OrderBy(
+                            x => x.Title),
+
+                _ =>
+                    filter.Descending
+                        ? query.OrderByDescending(
+                            x => x.CreatedAt)
+                        : query.OrderBy(
+                            x => x.CreatedAt)
+            };
+
+        // =====================================
+        // TOTAL COUNT
+        // =====================================
 
         var totalCount =
             await query.CountAsync();
 
-        // ✅ PAGINATION
+        // =====================================
+        // PAGINATION
+        // =====================================
 
-        var blogs = await query
-            .OrderByDescending(x => x.CreatedAt)
-            .Skip((page - 1) * pageSize)
-            .Take(pageSize)
-            .ToListAsync();
+        var blogs =
+            await query
+                .Skip(
+                    (filter.Page - 1)
+                    * filter.PageSize)
+
+                .Take(filter.PageSize)
+
+                .ToListAsync();
 
         return (blogs, totalCount);
     }
