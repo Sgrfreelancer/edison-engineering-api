@@ -4,6 +4,7 @@ using EdisonEngineering.Application.Interfaces;
 
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.OutputCaching;
 using EdisonEngineering.API.Auth;
 
 namespace EdisonEngineering.API.Controllers;
@@ -28,6 +29,8 @@ public class BlogsController : ControllerBase
     // GET ALL BLOGS
     // =========================================================
 
+    [OutputCache(
+        PolicyName = "blogs-cache")]
     [HttpGet]
     public async Task<IActionResult> GetAll(
         [FromQuery] BlogQueryDto query)
@@ -51,6 +54,8 @@ public class BlogsController : ControllerBase
     // GET BLOG BY SLUG
     // =========================================================
 
+    [OutputCache(
+        PolicyName = "blogs-cache")]
     [HttpGet("{slug}")]
     public async Task<IActionResult> GetBySlug(
         string slug)

@@ -1,4 +1,5 @@
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.OutputCaching;
 using EdisonEngineering.Application.Interfaces;
 using EdisonEngineering.Application.Common;
 using EdisonEngineering.Application.DTOs;
@@ -26,6 +27,8 @@ public class CitiesController : ControllerBase
     }
 
     // GET: /api/cities
+    [OutputCache(
+        PolicyName = "cities-cache")]
     [HttpGet]
     public async Task<IActionResult> GetAll()
     {
@@ -58,6 +61,8 @@ public class CitiesController : ControllerBase
     }
 
     // GET: /api/cities/pune
+    [OutputCache(
+        PolicyName = "cities-cache")]
     [HttpGet("{slug}")]
     public async Task<IActionResult> GetBySlug(string slug)
     {
@@ -104,6 +109,8 @@ public class CitiesController : ControllerBase
     }
 
     // GET: /api/cities/pune/projects
+    [OutputCache(
+        PolicyName = "cities-cache")]
     [HttpGet("{slug}/projects")]
     public async Task<IActionResult> GetProjects(string slug)
     {

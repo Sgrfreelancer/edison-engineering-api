@@ -185,6 +185,74 @@ builder.Services.AddRateLimiter(options =>
         };
 });
 
+builder.Services.AddOutputCache(options =>
+{
+    // =====================================================
+    // DEFAULT POLICY
+    // =====================================================
+
+    options.AddBasePolicy(policy =>
+    {
+        policy.Cache();
+    });
+
+    // =====================================================
+    // BLOG CACHE
+    // =====================================================
+
+    options.AddPolicy(
+        "blogs-cache",
+
+        policy =>
+        {
+            policy.Cache()
+                .Expire(
+                    TimeSpan.FromMinutes(5));
+        });
+
+    // =====================================================
+    // MENU CACHE
+    // =====================================================
+
+    options.AddPolicy(
+        "menu-cache",
+
+        policy =>
+        {
+            policy.Cache()
+                .Expire(
+                    TimeSpan.FromMinutes(30));
+        });
+
+    // =====================================================
+    // SERVICES CACHE
+    // =====================================================
+
+    options.AddPolicy(
+        "services-cache",
+
+        policy =>
+        {
+            policy.Cache()
+                .Expire(
+                    TimeSpan.FromMinutes(10));
+        });
+
+    // =====================================================
+    // CITIES CACHE
+    // =====================================================
+
+    options.AddPolicy(
+        "cities-cache",
+
+        policy =>
+        {
+            policy.Cache()
+                .Expire(
+                    TimeSpan.FromMinutes(10));
+        });
+});
+
 builder.Services
     .AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
     .AddJwtBearer(options =>
@@ -314,6 +382,8 @@ app.UseStaticFiles();
 
 // Enable rate limiting
 app.UseRateLimiter();
+
+app.UseOutputCache();
 
 // ✅ Enable Swagger ONLY in Development
 // if (app.Environment.IsDevelopment())

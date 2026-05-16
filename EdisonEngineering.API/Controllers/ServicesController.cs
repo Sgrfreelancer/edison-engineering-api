@@ -1,4 +1,5 @@
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.OutputCaching;
 using EdisonEngineering.Application.Interfaces;
 using EdisonEngineering.Application.Common;
 using EdisonEngineering.Application.DTOs;
@@ -26,6 +27,8 @@ public class ServicesController : ControllerBase
     }
 
     // GET: /api/services
+    [OutputCache(
+        PolicyName = "services-cache")]
     [HttpGet]
     public async Task<IActionResult> GetAll()
     {
@@ -58,6 +61,8 @@ public class ServicesController : ControllerBase
     }
 
     // GET: /api/services/solar
+    [OutputCache(
+        PolicyName = "services-cache")]
     [HttpGet("{categorySlug}")]
     public async Task<IActionResult> GetByCategory(string categorySlug)
     {
@@ -104,6 +109,8 @@ public class ServicesController : ControllerBase
     }
 
     // GET: /api/services/solar/homes
+    [OutputCache(
+        PolicyName = "services-cache")]
     [HttpGet("{categorySlug}/{serviceSlug}")]
     public async Task<IActionResult> GetService(
         string categorySlug,

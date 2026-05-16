@@ -1,4 +1,5 @@
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.OutputCaching;
 using EdisonEngineering.Application.Interfaces;
 using EdisonEngineering.Application.Common;
 using EdisonEngineering.Application.DTOs;
@@ -26,6 +27,8 @@ public class MenuController : ControllerBase
     }
 
     // GET: /api/menu
+    [OutputCache(
+        PolicyName = "menu-cache")]
     [HttpGet]
     public async Task<IActionResult> GetMenu()
     {
