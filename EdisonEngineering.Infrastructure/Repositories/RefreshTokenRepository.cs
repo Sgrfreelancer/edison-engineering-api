@@ -22,6 +22,7 @@ public class RefreshTokenRepository : IRefreshTokenRepository
     public async Task<RefreshToken?> GetAsync(string token)
     {
         return await _context.RefreshTokens
+            .AsNoTracking()
             .FirstOrDefaultAsync(x => x.Token == token);
     }
 

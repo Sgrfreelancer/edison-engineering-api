@@ -34,6 +34,7 @@ public class BlogRepository : IBlogRepository
     public async Task<Blog?> GetByIdAsync(int id)
     {
         return await _context.Blogs
+            .AsNoTracking()
             .FirstOrDefaultAsync(x => x.Id == id);
     }
 
@@ -70,7 +71,9 @@ public class BlogRepository : IBlogRepository
         int pageSize,
         string? search)
     {
-        var query = _context.Blogs.AsQueryable();
+        var query = _context.Blogs
+            .AsNoTracking()
+            .AsQueryable();
 
         // ✅ SEARCH
 

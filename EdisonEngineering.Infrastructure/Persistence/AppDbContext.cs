@@ -36,6 +36,32 @@ public class AppDbContext : DbContext
         modelBuilder.Entity<Blog>()
             .HasQueryFilter(x => !x.IsDeleted);
 
+        modelBuilder.Entity<Blog>()
+            .HasIndex(x => x.Slug)
+            .IsUnique();
+
+        modelBuilder.Entity<ServiceCategory>()
+            .HasIndex(x => x.Slug)
+            .IsUnique();
+
+        modelBuilder.Entity<Service>()
+            .HasIndex(x => x.Slug);
+
+        modelBuilder.Entity<City>()
+            .HasIndex(x => x.Slug)
+            .IsUnique();
+
+        modelBuilder.Entity<AppUser>()
+            .HasIndex(x => x.Email)
+            .IsUnique();
+
+        modelBuilder.Entity<JobApplication>()
+            .HasIndex(x => x.JobId);
+
+        modelBuilder.Entity<RefreshToken>()
+            .HasIndex(x => x.Token)
+            .IsUnique();
+
         // Menu self-reference relationship
         modelBuilder.Entity<Menu>()
             .HasMany(m => m.Children)

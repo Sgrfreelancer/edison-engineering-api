@@ -15,6 +15,7 @@ public class SubsidyRepository : ISubsidyRepository
     public async Task<Subsidy?> GetByKWAsync(decimal kw)
     {
         return await _context.Subsidies
+            .AsNoTracking()
             .FirstOrDefaultAsync(x => kw >= x.MinKW && kw <= x.MaxKW);
     }
 }

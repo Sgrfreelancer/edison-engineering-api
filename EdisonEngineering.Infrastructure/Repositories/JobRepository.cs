@@ -17,6 +17,7 @@ public class JobRepository : IJobRepository
         return await _context.Jobs
             .Where(x => x.IsActive)
             .OrderByDescending(x => x.CreatedAt)
+            .AsNoTracking()
             .ToListAsync();
     }
 }

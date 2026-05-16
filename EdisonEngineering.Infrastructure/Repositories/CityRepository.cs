@@ -25,6 +25,7 @@ public class CityRepository : ICityRepository
     {
         return await _context.Cities
             .Include(c => c.Projects)
+            .AsSplitQuery()
             .AsNoTracking()
             .FirstOrDefaultAsync(c => c.Slug == slug);
     }
@@ -33,6 +34,7 @@ public class CityRepository : ICityRepository
     {
         return await _context.Projects
             .Include(p => p.City)
+            .AsSplitQuery()
             .Where(p => p.City.Slug == slug)
             .AsNoTracking()
             .ToListAsync();

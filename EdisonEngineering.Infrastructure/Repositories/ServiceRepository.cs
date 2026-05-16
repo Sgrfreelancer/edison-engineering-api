@@ -18,6 +18,7 @@ public class ServiceRepository : IServiceRepository
     {
         return await _context.ServiceCategories
             .Include(x => x.Services)
+            .AsSplitQuery()
             .AsNoTracking()
             .ToListAsync();
     }
@@ -26,6 +27,7 @@ public class ServiceRepository : IServiceRepository
     {
         return await _context.ServiceCategories
             .Include(x => x.Services)
+            .AsSplitQuery()
             .AsNoTracking()
             .FirstOrDefaultAsync(x => x.Slug == slug);
     }
@@ -34,6 +36,7 @@ public class ServiceRepository : IServiceRepository
     {
         return await _context.Services
             .Include(x => x.ServiceCategory)
+            .AsSplitQuery()
             .AsNoTracking()
             .FirstOrDefaultAsync(x =>
                 x.Slug == serviceSlug &&

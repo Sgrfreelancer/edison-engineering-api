@@ -16,6 +16,7 @@ public class SlabRepository : ISlabRepository
     {
         return await _context.ElectricitySlabs
             .OrderBy(x => x.MinUnit)
+            .AsNoTracking()
             .ToListAsync();
     }
 }

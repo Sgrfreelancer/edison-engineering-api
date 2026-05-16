@@ -15,6 +15,7 @@ public class CityPricingRepository : ICityPricingRepository
     public async Task<CityPricing?> GetByCityAsync(string city)
     {
         return await _context.CityPricings
+            .AsNoTracking()
             .FirstOrDefaultAsync(x => x.City == city);
     }
 }

@@ -17,12 +17,14 @@ public class AuthRepository : IAuthRepository
     public async Task<AppUser?> GetByEmailAsync(string email)
     {
         return await _context.AppUsers
+            .AsNoTracking()
             .FirstOrDefaultAsync(x => x.Email == email);
     }
 
     public async Task<AppUser?> GetByIdAsync(int id)
     {
         return await _context.AppUsers
+            .AsNoTracking()
             .FirstOrDefaultAsync(x => x.Id == id);
     }
 }
