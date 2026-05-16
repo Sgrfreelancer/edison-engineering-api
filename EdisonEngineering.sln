@@ -11,6 +11,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EdisonEngineering.Domain", 
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EdisonEngineering.Infrastructure", "EdisonEngineering.Infrastructure\EdisonEngineering.Infrastructure.csproj", "{16E96549-FED8-41CF-8EA3-E8F56FBD71B0}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EdisonEngineering.Tests", "EdisonEngineering.Tests\EdisonEngineering.Tests.csproj", "{554640D5-3764-4C2B-BF9E-4BFB3E9E5764}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -69,6 +71,18 @@ Global
 		{16E96549-FED8-41CF-8EA3-E8F56FBD71B0}.Release|x64.Build.0 = Release|Any CPU
 		{16E96549-FED8-41CF-8EA3-E8F56FBD71B0}.Release|x86.ActiveCfg = Release|Any CPU
 		{16E96549-FED8-41CF-8EA3-E8F56FBD71B0}.Release|x86.Build.0 = Release|Any CPU
+		{554640D5-3764-4C2B-BF9E-4BFB3E9E5764}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{554640D5-3764-4C2B-BF9E-4BFB3E9E5764}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{554640D5-3764-4C2B-BF9E-4BFB3E9E5764}.Debug|x64.ActiveCfg = Debug|Any CPU
+		{554640D5-3764-4C2B-BF9E-4BFB3E9E5764}.Debug|x64.Build.0 = Debug|Any CPU
+		{554640D5-3764-4C2B-BF9E-4BFB3E9E5764}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{554640D5-3764-4C2B-BF9E-4BFB3E9E5764}.Debug|x86.Build.0 = Debug|Any CPU
+		{554640D5-3764-4C2B-BF9E-4BFB3E9E5764}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{554640D5-3764-4C2B-BF9E-4BFB3E9E5764}.Release|Any CPU.Build.0 = Release|Any CPU
+		{554640D5-3764-4C2B-BF9E-4BFB3E9E5764}.Release|x64.ActiveCfg = Release|Any CPU
+		{554640D5-3764-4C2B-BF9E-4BFB3E9E5764}.Release|x64.Build.0 = Release|Any CPU
+		{554640D5-3764-4C2B-BF9E-4BFB3E9E5764}.Release|x86.ActiveCfg = Release|Any CPU
+		{554640D5-3764-4C2B-BF9E-4BFB3E9E5764}.Release|x86.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
