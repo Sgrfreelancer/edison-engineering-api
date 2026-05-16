@@ -5,6 +5,7 @@ using EdisonEngineering.Application.DTOs;
 using EdisonEngineering.Application.Interfaces;
 
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.RateLimiting;
 
 namespace EdisonEngineering.API.Controllers;
 
@@ -36,6 +37,7 @@ public class AuthController : ControllerBase
     /// <summary>
     /// Admin login API
     /// </summary>
+    [EnableRateLimiting("login-policy")]
     [HttpPost("login")]
     public async Task<IActionResult> Login(
         [FromBody] LoginRequestDto dto)

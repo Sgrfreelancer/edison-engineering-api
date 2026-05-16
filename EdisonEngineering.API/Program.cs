@@ -108,18 +108,81 @@ builder.Services.AddCors(options =>
 // Add rate limiting
 builder.Services.AddRateLimiter(options =>
 {
-    options.RejectionStatusCode = StatusCodes.Status429TooManyRequests;
+    // =====================================================
+    // GLOBAL LIMITER
+    // =====================================================
 
-    options.AddPolicy("fixed", context =>
-        RateLimitPartition.GetFixedWindowLimiter(
-            partitionKey: context.Connection.RemoteIpAddress?.ToString() ?? "unknown",
-            factory: partition => new FixedWindowRateLimiterOptions
-            {
-                PermitLimit = 20,
-                Window = TimeSpan.FromMinutes(1),
-                QueueProcessingOrder = QueueProcessingOrder.OldestFirst,
-                QueueLimit = 5
-            }));
+    options.GlobalLimiter =
+        PartitionedRateLimiter.Create<
+            HttpContext,
+            string>(context =>
+        {
+            var ip =
+                context.Connection
+                    .RemoteIpAddress
+                    ?.ToString()
+
+                ?? "unknown";
+
+            return RateLimitPartition
+                .GetFixedWindowLimiter(
+                    partitionKey: ip,
+
+                    factory: _ =>
+                        new FixedWindowRateLimiterOptions
+                        {
+                            PermitLimit = 100,
+
+                            Window =
+                                TimeSpan.FromMinutes(1),
+
+                            QueueProcessingOrder =
+                                QueueProcessingOrder
+                                    .OldestFirst,
+
+                            QueueLimit = 10
+                        });
+        });
+
+    options.AddPolicy(
+        "login-policy",
+        context =>
+            RateLimitPartition.GetFixedWindowLimiter(
+                partitionKey: context.Connection.RemoteIpAddress?.ToString() ?? "unknown",
+                factory: _ =>
+                    new FixedWindowRateLimiterOptions
+                    {
+                        PermitLimit = 5,
+                        Window = TimeSpan.FromMinutes(1),
+                        QueueProcessingOrder = QueueProcessingOrder.OldestFirst,
+                        QueueLimit = 0
+                    }));
+
+    // =====================================================
+    // RESPONSE
+    // =====================================================
+
+    options.OnRejected =
+        async (context, token) =>
+        {
+            context.HttpContext
+                .Response.StatusCode = 429;
+
+            context.HttpContext
+                .Response.ContentType =
+                    "application/json";
+
+            await context.HttpContext
+                .Response.WriteAsync(
+                    """
+                    {
+                        "success": false,
+                        "message":
+                        "Too many requests. Please try again later."
+                    }
+                    """,
+                    cancellationToken: token);
+        };
 });
 
 builder.Services
