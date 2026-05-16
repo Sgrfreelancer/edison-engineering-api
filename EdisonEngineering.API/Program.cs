@@ -16,6 +16,8 @@ using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.IdentityModel.Tokens;
 using System.Text;
 using Microsoft.OpenApi.Models;
+using Microsoft.AspNetCore.Diagnostics.HealthChecks;
+using System.Text.Json;
 using EdisonEngineering.API.Auth;
 
 Log.Logger = new LoggerConfiguration()
@@ -90,7 +92,15 @@ builder.Services.AddScoped<ISlabRepository, SlabRepository>();
 builder.Services.AddScoped<IJobRepository, JobRepository>();
 builder.Services.AddScoped<IJobApplicationRepository, JobApplicationRepository>();
 builder.Services.AddScoped<IJobService, JobService>();
-builder.Services.AddHealthChecks();
+builder.Services
+    .AddHealthChecks()
+
+    // ==========================================
+    // DATABASE HEALTH CHECK
+    // ==========================================
+
+    .AddDbContextCheck<AppDbContext>(
+        name: "Database");
 builder.Services.AddScoped<IAuthRepository, AuthRepository>();
 builder.Services.AddScoped<IAuthService, AuthService>();
 builder.Services.AddScoped<JwtService>();
@@ -261,6 +271,11 @@ builder.Services.AddOutputCache(options =>
 });
 
 builder.Services
+    .Configure<EmailSettings>(
+        builder.Configuration
+            .GetSection("EmailSettings"));
+
+builder.Services
     .AddSingleton<IBackgroundTaskQueue,
         BackgroundTaskQueue>();
 
@@ -424,6 +439,51 @@ app.UseMiddleware<AuditMiddleware>();
 app.UseAuthorization();
 
 app.MapControllers();
+
+app.MapHealthChecks("/health/live");
+
+app.MapHealthChecks(
+    "/health/ready",
+
+    new HealthCheckOptions
+    {
+        ResponseWriter =
+            async (context, report) =>
+            {
+                context.Response.ContentType =
+                    "application/json";
+
+                var response =
+                    new
+                    {
+                        Status =
+                            report.Status.ToString(),
+
+                        Checks =
+                            report.Entries.Select(x =>
+                                new
+                                {
+                                    Name = x.Key,
+
+                                    Status =
+                                        x.Value.Status
+                                            .ToString(),
+
+                                    Duration =
+                                        x.Value.Duration
+                                            .ToString()
+                                }),
+
+                        TotalDuration =
+                            report.TotalDuration
+                                .ToString()
+                    };
+
+                await context.Response.WriteAsync(
+                    JsonSerializer.Serialize(
+                        response));
+            }
+    });
 
 app.MapHealthChecks("/health");
 
