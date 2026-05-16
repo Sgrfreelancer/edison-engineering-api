@@ -6,9 +6,10 @@ using BCrypt.Net;
 
 using EdisonEngineering.Application.DTOs;
 using EdisonEngineering.Application.Interfaces;
+using EdisonEngineering.Application.Common.Settings;
 using EdisonEngineering.Domain.Entities;
-using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Logging;
+using Microsoft.Extensions.Options;
 
 using Microsoft.IdentityModel.Tokens;
 
@@ -18,19 +19,19 @@ namespace EdisonEngineering.Application.Services;
 public class AuthService : IAuthService
 {
     private readonly IAuthRepository _repo;
-    private readonly IConfiguration _configuration;
+    private readonly JwtSettings _jwtSettings;
     private readonly ILogger<AuthService> _logger;
     private readonly IRefreshTokenRepository
     _refreshTokenRepository;
 
     public AuthService(
         IAuthRepository repo,
-        IConfiguration configuration,
+        IOptions<JwtSettings> jwtSettings,
         ILogger<AuthService> logger,
         IRefreshTokenRepository refreshTokenRepository)
     {
         _repo = repo;
-        _configuration = configuration;
+        _jwtSettings = jwtSettings.Value;
         _logger = logger;
         _refreshTokenRepository = refreshTokenRepository;
     }
@@ -82,8 +83,7 @@ public class AuthService : IAuthService
             GenerateRefreshToken();
 
         var expiryMinutes =
-            Convert.ToDouble(
-                _configuration["Jwt:ExpiryMinutes"]);
+            _jwtSettings.ExpiryMinutes;
 
         var expiration =
             DateTime.UtcNow.AddMinutes(
@@ -189,8 +189,7 @@ public class AuthService : IAuthService
             GenerateRefreshToken();
 
         var expiryMinutes =
-            Convert.ToDouble(
-                _configuration["Jwt:ExpiryMinutes"]);
+            _jwtSettings.ExpiryMinutes;
 
         var expiration =
             DateTime.UtcNow.AddMinutes(
@@ -235,9 +234,6 @@ public class AuthService : IAuthService
     private string GenerateJwtToken(
         EdisonEngineering.Domain.Entities.AppUser user)
     {
-        var jwtSettings =
-            _configuration.GetSection("Jwt");
-
         var claims = new List<Claim>
         {
             new Claim(ClaimTypes.NameIdentifier,
@@ -256,7 +252,7 @@ public class AuthService : IAuthService
         var key =
             new SymmetricSecurityKey(
                 Encoding.UTF8.GetBytes(
-                    jwtSettings["Key"]));
+                    _jwtSettings.Key));
 
         var creds =
             new SigningCredentials(
@@ -264,14 +260,13 @@ public class AuthService : IAuthService
                 SecurityAlgorithms.HmacSha256);
 
         var expiryMinutes =
-            Convert.ToDouble(
-                jwtSettings["ExpiryMinutes"]);
+            _jwtSettings.ExpiryMinutes;
 
         var token =
             new JwtSecurityToken(
-                issuer: jwtSettings["Issuer"],
+                issuer: _jwtSettings.Issuer,
 
-                audience: jwtSettings["Audience"],
+                audience: _jwtSettings.Audience,
 
                 claims: claims,
 

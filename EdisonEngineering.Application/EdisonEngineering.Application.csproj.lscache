@@ -56,9 +56,12 @@ TemporaryDependencyNodeTargetIdentifier=net9.0
 Class1.cs
 common/
  ApiResponse.cs
- EmailSettings.cs
  ErrorResponse.cs
  PagedResponse.cs
+ Settings/
+  EmailSettings.cs
+  JwtSettings.cs
+  SerilogSettings.cs
 DTOs/
  ApplyJobDto.cs
  BlogDto.cs

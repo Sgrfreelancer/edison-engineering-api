@@ -1,4 +1,5 @@
-namespace EdisonEngineering.Application.Common;
+namespace EdisonEngineering.Application
+    .Common.Settings;
 
 public class EmailSettings
 {

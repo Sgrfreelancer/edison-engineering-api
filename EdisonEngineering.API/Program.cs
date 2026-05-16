@@ -2,6 +2,7 @@ using EdisonEngineering.Infrastructure.Persistence;
 using Microsoft.EntityFrameworkCore;
 using EdisonEngineering.Application.Interfaces;
 using EdisonEngineering.Application.Common;
+using EdisonEngineering.Application.Common.Settings;
 using EdisonEngineering.Infrastructure.Repositories;
 using EdisonEngineering.Application.Services;
 using EdisonEngineering.API.BackgroundServices;
@@ -271,9 +272,19 @@ builder.Services.AddOutputCache(options =>
 });
 
 builder.Services
+    .Configure<JwtSettings>(
+        builder.Configuration
+            .GetSection("Jwt"));
+
+builder.Services
     .Configure<EmailSettings>(
         builder.Configuration
             .GetSection("EmailSettings"));
+
+builder.Services
+    .Configure<SerilogSettings>(
+        builder.Configuration
+            .GetSection("SerilogSettings"));
 
 builder.Services
     .AddSingleton<IBackgroundTaskQueue,
@@ -292,7 +303,9 @@ builder.Services
     .AddJwtBearer(options =>
     {
         var jwtSettings =
-            builder.Configuration.GetSection("Jwt");
+            builder.Configuration
+                .GetSection("Jwt")
+                .Get<JwtSettings>();
 
         options.TokenValidationParameters =
             new TokenValidationParameters
@@ -301,12 +314,12 @@ builder.Services
                 ValidateAudience = true,
                 ValidateLifetime = true,
                 ValidateIssuerSigningKey = true,
-                ValidIssuer = jwtSettings["Issuer"],
-                ValidAudience = jwtSettings["Audience"],
+                ValidIssuer = jwtSettings.Issuer,
+                ValidAudience = jwtSettings.Audience,
                 IssuerSigningKey =
                     new SymmetricSecurityKey(
                         Encoding.UTF8.GetBytes(
-                            jwtSettings["Key"]))
+                            jwtSettings.Key))
             };
     });
 
