@@ -115,7 +115,10 @@ Repositories/
  ServiceRepository.cs
  SlabRepository.cs
  SubsidyRepository.cs
-Services/JwtService.cs
+Services/
+ BackgroundTaskQueue.cs
+ EmailService.cs
+ JwtService.cs
 
 [metadataReferences]
 ../

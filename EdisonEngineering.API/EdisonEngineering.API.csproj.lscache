@@ -58,6 +58,7 @@ Auth/
  HasPermissionAttribute.cs
  PermissionHandler.cs
  PermissionRequirement.cs
+BackgroundServices/EmailBackgroundService.cs
 Controllers/
  AuthController.cs
  BlogsController.cs

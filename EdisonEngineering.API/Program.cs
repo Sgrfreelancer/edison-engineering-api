@@ -4,6 +4,7 @@ using EdisonEngineering.Application.Interfaces;
 using EdisonEngineering.Application.Common;
 using EdisonEngineering.Infrastructure.Repositories;
 using EdisonEngineering.Application.Services;
+using EdisonEngineering.API.BackgroundServices;
 using EdisonEngineering.API.Middleware;
 using EdisonEngineering.Infrastructure.Services;
 using Microsoft.AspNetCore.Mvc;
@@ -252,6 +253,18 @@ builder.Services.AddOutputCache(options =>
                     TimeSpan.FromMinutes(10));
         });
 });
+
+builder.Services
+    .AddSingleton<IBackgroundTaskQueue,
+        BackgroundTaskQueue>();
+
+builder.Services
+    .AddScoped<IEmailService,
+        EmailService>();
+
+builder.Services
+    .AddHostedService
+        <EmailBackgroundService>();
 
 builder.Services
     .AddAuthentication(JwtBearerDefaults.AuthenticationScheme)

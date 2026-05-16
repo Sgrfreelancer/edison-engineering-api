@@ -1,0 +1,7 @@
+[2026-05-16 14:31:05 INF] Email background service started {"SourceContext":"EdisonEngineering.API.BackgroundServices.EmailBackgroundService"}
+[2026-05-16 14:31:05 WRN] The WebRootPath was not found: D:\Work\EdisionEngineering\EdisonEngineering.API\wwwroot. Static files may be unavailable. {"EventId":{"Id":16,"Name":"WebRootPathNotFound"},"SourceContext":"Microsoft.AspNetCore.StaticFiles.StaticFileMiddleware"}
+[2026-05-16 14:34:49 ERR] Error while processing email queue {"SourceContext":"EdisonEngineering.API.BackgroundServices.EmailBackgroundService"}
+System.OperationCanceledException: The operation was canceled.
+   at System.Threading.Channels.AsyncOperation`1.GetResult(Int16 token)
+   at EdisonEngineering.Infrastructure.Services.BackgroundTaskQueue.DequeueAsync(CancellationToken cancellationToken) in D:\Work\EdisionEngineering\EdisonEngineering.Infrastructure\Services\BackgroundTaskQueue.cs:line 31
+   at EdisonEngineering.API.BackgroundServices.EmailBackgroundService.ExecuteAsync(CancellationToken stoppingToken) in D:\Work\EdisionEngineering\EdisonEngineering.API\BackgroundServices\EmailBackgroundService.cs:line 55

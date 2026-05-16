@@ -9,12 +9,15 @@ public class LeadService : ILeadService
 {
     private readonly ILeadRepository _repo;
     private readonly ILogger<LeadService> _logger;
+    private readonly IBackgroundTaskQueue _backgroundTaskQueue;
 
     public LeadService(
         ILeadRepository repo,
+        IBackgroundTaskQueue backgroundTaskQueue,
         ILogger<LeadService> logger)
     {
         _repo = repo;
+        _backgroundTaskQueue = backgroundTaskQueue;
         _logger = logger;
     }
 
@@ -49,6 +52,18 @@ public class LeadService : ILeadService
         };
 
         await _repo.AddAsync(lead);
+
+        _backgroundTaskQueue.QueueEmail(
+            new EmailMessageDto
+            {
+                To = "admin@edison.com",
+
+                Subject =
+                    "New Lead Received",
+
+                Body =
+                    $"Lead from {dto.Name}"
+            });
 
         _logger.LogInformation(
             "Lead created successfully for phone: {Phone}",

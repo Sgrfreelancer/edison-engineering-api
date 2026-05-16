@@ -66,6 +66,7 @@ DTOs/
  CityDto.cs
  CreateBlogDto.cs
  CreateLeadDto.cs
+ EmailMessageDto.cs
  FileUploadResponseDto.cs
  JobDto.cs
  LoginRequestDto.cs
@@ -81,12 +82,14 @@ DTOs/
 Interfaces/
  IAuthRepository.cs
  IAuthService.cs
+ IBackgroundTaskQueue.cs
  IBlogRepository.cs
  IBlogService.cs
  ICityPricingRepository.cs
  ICityRepository.cs
  ICityService.cs
  IConfigRepository.cs
+ IEmailService.cs
  IJobApplicationRepository.cs
  IJobRepository.cs
  IJobService.cs
