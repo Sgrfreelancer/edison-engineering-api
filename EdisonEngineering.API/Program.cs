@@ -122,13 +122,14 @@ builder.Services.AddResponseCompression();
 // Add CORS
 builder.Services.AddCors(options =>
 {
-    options.AddPolicy("AllowFrontend",
+    options.AddPolicy("AngularPolicy",
         policy =>
         {
             policy
-                .AllowAnyOrigin()
+                .WithOrigins("http://localhost:4200")
+                .AllowAnyHeader()
                 .AllowAnyMethod()
-                .AllowAnyHeader();
+                .AllowCredentials();
         });
 });
 
@@ -432,9 +433,6 @@ app.UseMiddleware<ExceptionMiddleware>();
 // Enable response compression
 app.UseResponseCompression();
 
-// Enable CORS
-app.UseCors("AllowFrontend");
-
 // Enable static files
 app.UseStaticFiles();
 
@@ -457,6 +455,9 @@ app.UseSerilogRequestLogging();
 app.UseHttpsRedirection();
 
 app.UseRouting();
+
+// Enable CORS (must be after routing)
+app.UseCors("AngularPolicy");
 
 app.UseAuthentication();
 app.UseMiddleware<AuditMiddleware>();

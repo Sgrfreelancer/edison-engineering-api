@@ -63,6 +63,11 @@ public class AuthController : ControllerBase
                 });
         }
 
+        // Add token expiration header to response
+        Response.Headers.Append(
+            "Token-Expiration",
+            result.Expiration.ToString("O"));
+
         return Ok(
             new ApiResponse<LoginResponseDto>
             {
@@ -89,6 +94,11 @@ public class AuthController : ControllerBase
                         "Invalid or expired refresh token"
                 });
         }
+
+        // Add token expiration header to response
+        Response.Headers.Append(
+            "Token-Expiration",
+            result.Expiration.ToString("O"));
 
         return Ok(
             new ApiResponse<LoginResponseDto>
